@@ -3,61 +3,155 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
+import {
+  Drawer,
+  DrawerHeader,
+  Dropdown,
+  DropdownDivider,
+  DropdownHeader,
+  DropdownItem,
+  Sidebar,
+  SidebarItem,
+  SidebarItemGroup,
+  SidebarItems,
+} from "flowbite-react";
+import {
+  FaBars,
+  FaFileMedical,
+  FaFolder,
+  FaRegCircleUser,
+  FaUsers,
+} from "react-icons/fa6";
+import { HiLogout } from "react-icons/hi";
 
 export default function HeaderComponents() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleClose = () => setIsOpen(false);
+
   const pathName = usePathname();
-  console.log("pathName: ", pathName);
 
   return (
-    <div>
-      <nav className="bg-white border-gray-200 dark:bg-gray-900">
-        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-          <div className="flex items-center space-x-3 rtl:space-x-reverse">
-            <img
-              src="https://flowbite.com/docs/images/logo.svg"
-              className="h-8"
-              alt="Flowbite Logo"
-            />
-            <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-              JIRA
-            </span>
-          </div>
-          <div className="hidden w-full md:block md:w-auto" id="navbar-default">
-            <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-              <li>
-                <Link
-                  href="/"
-                  className={`text-white ${
-                    pathName === "/projects" && "text-red-600"
-                  }`}
-                >
-                  Project
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/users"
-                  className={`text-white ${
-                    pathName === "/about" && "text-red-600"
-                  }`}
-                >
-                  Users
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/news"
-                  className={`text-white ${
-                    pathName === "/news" && "text-red-600"
-                  }`}
-                >
-                  Create Task
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </div>
+    <nav className="p-3 bg-orange-300 flex justify-between">
+      <div className="flex items-center gap-2">
+        <img
+          src="https://flowbite.com/docs/images/logo.svg"
+          className="h-8"
+          alt="Flowbite Logo"
+        />
+        <span>JIRA</span>
+      </div>
+      <button
+        onClick={() => {
+          setIsOpen(true);
+        }}
+        type="button"
+        className="block desktop:hidden px-2 rounded-md bg-green-500"
+      >
+        <FaBars />
+      </button>
+      <div className="content-center hidden desktop:block">
+        <ul className="flex gap-5 items-center">
+          <li>
+            <Link
+              href="/projects"
+              className={`${
+                pathName === "/projects" ? "text-blue-500" : "text-white"
+              }`}
+            >
+              Projects
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/users"
+              className={`${
+                pathName === "/users" ? "text-blue-500" : "text-white"
+              }`}
+            >
+              Users
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/createTask"
+              className={`${
+                pathName === "/createTask" ? "text-blue-500" : "text-white"
+              }`}
+            >
+              Create Task
+            </Link>
+          </li>
+          <li>
+            <Dropdown
+              trigger="hover"
+              arrowIcon={false}
+              renderTrigger={() => (
+                <img
+                  className="w-10 h-10 rounded-full"
+                  src="https://flowbite.com/docs/images/logo.svg"
+                  alt="Rounded avatar"
+                />
+              )}
+            >
+              <DropdownHeader>Bui Van Luong</DropdownHeader>
+              <DropdownItem icon={FaRegCircleUser}>Profile</DropdownItem>
+              <DropdownDivider />
+              <DropdownItem icon={HiLogout}>Sign out</DropdownItem>
+            </Dropdown>
+          </li>
+        </ul>
+      </div>
+      <Drawer
+        open={isOpen}
+        onClose={handleClose}
+        position="right"
+        className="fixed top-0 right-0 h-screen desktop:hidden"
+      >
+        <DrawerHeader title="Bui Van Luong" titleIcon={FaBars} />
+        <Sidebar>
+          <SidebarItems>
+            <SidebarItemGroup>
+              <SidebarItem
+                icon={FaFolder}
+                href="/projects"
+                style={{
+                  color: pathName === "/projects" ? "#3f83f8" : "#ffffff",
+                  backgroundColor: pathName === "/projects" ? "#fdba8c" : "",
+                }}
+              >
+                Projects
+              </SidebarItem>
+              <SidebarItem
+                icon={FaUsers}
+                href="/users"
+                style={{
+                  color: pathName === "/users" ? "#3f83f8" : "#ffffff",
+                  backgroundColor: pathName === "/users" ? "#fdba8c" : "",
+                }}
+              >
+                Users
+              </SidebarItem>
+              <SidebarItem
+                icon={FaFileMedical}
+                href="/createTask"
+                style={{
+                  color: pathName === "/createTask" ? "#3f83f8" : "#ffffff",
+                  backgroundColor: pathName === "/createTask" ? "#fdba8c" : "",
+                }}
+              >
+                Create Task
+              </SidebarItem>
+            </SidebarItemGroup>
+            <SidebarItemGroup>
+              <SidebarItem icon={FaRegCircleUser}>Profile</SidebarItem>
+            </SidebarItemGroup>
+            <SidebarItemGroup>
+              <SidebarItem icon={HiLogout}>Sign out</SidebarItem>
+            </SidebarItemGroup>
+          </SidebarItems>
+        </Sidebar>
+      </Drawer>
+    </nav>
   );
 }

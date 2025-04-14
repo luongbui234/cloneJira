@@ -9,6 +9,11 @@ export default {
     ".flowbite-react\\class-list.json"
   ],
   theme: {
+    screens: {
+      "ipPlus": "376px",
+      "ipad": "415px",
+      "desktop": "769px"
+    },
     extend: {
       colors: {
         background: "var(--background)",
