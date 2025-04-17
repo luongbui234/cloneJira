@@ -37,7 +37,9 @@ export default function SigninPage() {
             />
           </div>
           <Button type="submit">Sign in</Button>
-          <Label color="#fff">Don't have an account yet? Register now</Label>
+          <Label color="#fff">
+            Don&apos;t have an account yet? Register now
+          </Label>
         </form>
         <button className="m-2">
           <FaFacebook className="text-3xl text-blue-500" />
