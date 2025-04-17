@@ -23,13 +23,26 @@ import {
   FaUsers,
 } from "react-icons/fa6";
 import { HiLogout } from "react-icons/hi";
+import {
+  Drawer as AntdDrawer,
+  Button as AntdButton,
+  Form,
+  Input,
+  Select,
+  Slider,
+} from "antd";
+const { TextArea } = Input;
 
 export default function HeaderComponents() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleClose = () => setIsOpen(false);
+  const [open, setOpen] = useState(false);
 
   const pathName = usePathname();
+
+  const onFinish = (values: string) => {
+    console.log("Success:", values);
+  };
 
   return (
     <nav className="p-3 bg-orange-300 flex justify-between">
@@ -73,14 +86,14 @@ export default function HeaderComponents() {
             </Link>
           </li>
           <li>
-            <Link
-              href="/createTask"
-              className={`${
-                pathName === "/createTask" ? "text-blue-500" : "text-white"
-              }`}
+            <button
+              onClick={() => {
+                setOpen(true);
+              }}
+              className="text-white"
             >
               Create Task
-            </Link>
+            </button>
           </li>
           <li>
             <Dropdown
@@ -104,7 +117,7 @@ export default function HeaderComponents() {
       </div>
       <Drawer
         open={isOpen}
-        onClose={handleClose}
+        onClose={() => setIsOpen(false)}
         position="right"
         className="fixed top-0 right-0 h-screen desktop:hidden"
       >
@@ -132,15 +145,15 @@ export default function HeaderComponents() {
               >
                 Users
               </SidebarItem>
-              <SidebarItem
-                icon={FaFileMedical}
-                href="/createTask"
-                style={{
-                  color: pathName === "/createTask" ? "#3f83f8" : "#ffffff",
-                  backgroundColor: pathName === "/createTask" ? "#fdba8c" : "",
-                }}
-              >
-                Create Task
+              <SidebarItem icon={FaFileMedical}>
+                <button
+                  onClick={() => {
+                    setOpen(true);
+                  }}
+                  className="text-white"
+                >
+                  Create Task
+                </button>
               </SidebarItem>
             </SidebarItemGroup>
             <SidebarItemGroup>
@@ -152,6 +165,253 @@ export default function HeaderComponents() {
           </SidebarItems>
         </Sidebar>
       </Drawer>
+      <AntdDrawer
+        title={
+          <div className="flex items-center space-x-3">
+            <FaFileMedical className="text-xl" />
+            <span className="text-xl">Create Task</span>
+          </div>
+        }
+        onClose={() => setOpen(false)}
+        open={open}
+        placement="left"
+        closable={false}
+        footer={
+          <div className="flex justify-end space-x-3">
+            <AntdButton onClick={() => setOpen(false)}>Cancel</AntdButton>
+            <AntdButton onClick={() => setOpen(false)} type="primary">
+              Create
+            </AntdButton>
+          </div>
+        }
+      >
+        <Form
+          name="basic"
+          layout="vertical"
+          onFinish={onFinish}
+          className="w-full"
+        >
+          <Form.Item
+            label="Project"
+            name="project"
+            rules={[{ required: true, message: "Project name is required" }]}
+          >
+            <Select
+              placeholder={"Select a project category"}
+              options={[
+                {
+                  label: "Dự án web",
+                  value: 1,
+                },
+                {
+                  label: "Dự án phần mềm",
+                  value: 2,
+                },
+                {
+                  label: "Dự án di động",
+                  value: 3,
+                },
+              ]}
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="Task name"
+            name="taskName"
+            rules={[{ required: true, message: "Project name is required" }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="Status"
+            name="status"
+            rules={[
+              { required: true, message: "Project category is required" },
+            ]}
+          >
+            <Select
+              placeholder={"Select a project category"}
+              options={[
+                {
+                  label: "Dự án web",
+                  value: 1,
+                },
+                {
+                  label: "Dự án phần mềm",
+                  value: 2,
+                },
+                {
+                  label: "Dự án di động",
+                  value: 3,
+                },
+              ]}
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="Priority"
+            name="priority"
+            rules={[
+              { required: true, message: "Project category is required" },
+            ]}
+          >
+            <Select
+              placeholder={"Select a project category"}
+              options={[
+                {
+                  label: "Dự án web",
+                  value: 1,
+                },
+                {
+                  label: "Dự án phần mềm",
+                  value: 2,
+                },
+                {
+                  label: "Dự án di động",
+                  value: 3,
+                },
+              ]}
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="Task type"
+            name="taskType"
+            rules={[
+              { required: true, message: "Project category is required" },
+            ]}
+          >
+            <Select
+              placeholder={"Select a project category"}
+              options={[
+                {
+                  label: "Dự án web",
+                  value: 1,
+                },
+                {
+                  label: "Dự án phần mềm",
+                  value: 2,
+                },
+                {
+                  label: "Dự án di động",
+                  value: 3,
+                },
+              ]}
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="Assigners"
+            name="assigners"
+            rules={[
+              { required: true, message: "Project category is required" },
+            ]}
+          >
+            <Select
+              placeholder={"Select a project category"}
+              options={[
+                {
+                  label: "Dự án web",
+                  value: 1,
+                },
+                {
+                  label: "Dự án phần mềm",
+                  value: 2,
+                },
+                {
+                  label: "Dự án di động",
+                  value: 3,
+                },
+              ]}
+            />
+          </Form.Item>
+
+          <p>Time Tracking</p>
+          <div>
+            <Form.Item
+              label="Total estimated hours"
+              name="totalEstimatedHours"
+              rules={[
+                { required: true, message: "Project category is required" },
+              ]}
+            >
+              <Select
+                placeholder={"Select a project category"}
+                options={[
+                  {
+                    label: "Dự án web",
+                    value: 1,
+                  },
+                  {
+                    label: "Dự án phần mềm",
+                    value: 2,
+                  },
+                  {
+                    label: "Dự án di động",
+                    value: 3,
+                  },
+                ]}
+              />
+            </Form.Item>
+
+            <Form.Item
+              label="Hours spent"
+              name="hoursSpent"
+              rules={[
+                { required: true, message: "Project category is required" },
+              ]}
+            >
+              <Select
+                placeholder={"Select a project category"}
+                options={[
+                  {
+                    label: "Dự án web",
+                    value: 1,
+                  },
+                  {
+                    label: "Dự án phần mềm",
+                    value: 2,
+                  },
+                  {
+                    label: "Dự án di động",
+                    value: 3,
+                  },
+                ]}
+              />
+            </Form.Item>
+            <div>
+              <Slider defaultValue={30} />
+              <div className="flex justify-between">
+                <span>6 hour(s) spent</span>
+                <span>3 hour(s) remaining</span>
+              </div>
+            </div>
+          </div>
+
+          <Form.Item label="Descriptions">
+            <TextArea rows={4} />
+          </Form.Item>
+
+          <Form.Item label={null}>
+            <AntdButton
+              onClick={() => setOpen(false)}
+              type="default"
+              className="bg-gray-300"
+            >
+              Cancel
+            </AntdButton>
+            <AntdButton
+              onClick={() => setOpen(false)}
+              type="primary"
+              htmlType="submit"
+              className="mx-3"
+            >
+              Create
+            </AntdButton>
+          </Form.Item>
+        </Form>
+      </AntdDrawer>
     </nav>
   );
 }
