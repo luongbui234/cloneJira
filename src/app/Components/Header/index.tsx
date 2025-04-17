@@ -56,7 +56,11 @@ export default function HeaderComponents() {
             <Link
               href="/projects"
               className={`${
-                pathName === "/projects" ? "text-blue-500" : "text-white"
+                pathName === "/projects"
+                  ? "text-blue-500"
+                  : pathName === "/projects/createProject"
+                  ? "text-blue-500"
+                  : "text-white"
               }`}
             >
               Projects

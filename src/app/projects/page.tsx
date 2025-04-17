@@ -15,6 +15,7 @@ import {
   EllipsisOutlined,
   UserOutlined,
 } from "@ant-design/icons";
+import Link from "next/link";
 const { Search } = Input;
 
 export default function ProjectsPage() {
@@ -166,7 +167,12 @@ export default function ProjectsPage() {
 
   return (
     <div className="m-5 space-y-5">
-      <p>Projects</p>
+      <div className="flex justify-between">
+        <p className="text-2xl font-bold">Projects</p>
+        <Button type="primary">
+          <Link href={"/projects/createProject"}>Create Project</Link>
+        </Button>
+      </div>
       <Search onSearch={onSearch} allowClear enterButton size="large" />
       <Table
         dataSource={dataSourceMobile}
