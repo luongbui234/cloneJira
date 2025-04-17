@@ -27,10 +27,12 @@ export default function ProjectsPage() {
     {
       key: 1,
       label: (
-        <>
-          <Button>Sua</Button>
-          <Button>Xoa</Button>
-        </>
+        <div className="flex flex-col gap-2">
+          <Button type="primary">
+            <Link href={"/projects/updateProject/15907"}>Update project</Link>
+          </Button>
+          <Button danger>Delete project</Button>
+        </div>
       ),
     },
   ];

@@ -1,27 +1,11 @@
 "use client";
 
-import React, { useRef } from "react";
 import { Button, Form, Input, Select } from "antd";
-import TextArea from "antd/es/input/TextArea";
+import Link from "next/link";
+import React from "react";
+const { TextArea } = Input;
 
-export default function CreateProjectPage() {
-  // const cloud = useCKEditorCloud({
-  //   version: "45.0.0",
-  //   premium: true,
-  // });
-
-  // if (cloud.status === "error") {
-  //   return <div>Error!</div>;
-  // }
-
-  // if (cloud.status === "loading") {
-  //   return <div>Loading...</div>;
-  // }
-
-  // const { ClassicEditor, Essentials, Paragraph, Bold, Italic } = cloud.CKEditor;
-
-  // const { FormatPainter } = cloud.CKEditorPremiumFeatures;
-
+export default function UpdateProjectPage() {
   const onFinish = (values: string) => {
     console.log("Success:", values);
   };
@@ -35,6 +19,14 @@ export default function CreateProjectPage() {
         onFinish={onFinish}
         className="w-full"
       >
+        <Form.Item
+          label="Project ID"
+          name="projectId"
+          rules={[{ required: true, message: "Project ID is required" }]}
+        >
+          <Input disabled />
+        </Form.Item>
+
         <Form.Item
           label="Project name"
           name="projectName"
@@ -73,31 +65,13 @@ export default function CreateProjectPage() {
 
         <Form.Item label={null}>
           <Button type="default" className="bg-gray-300">
-            Cancel
+            <Link href={"/projects"}>Cancel</Link>
           </Button>
           <Button type="primary" htmlType="submit" className="mx-3">
-            Create
+            Update
           </Button>
         </Form.Item>
       </Form>
-
-      {/* <CKEditor
-        editor={ClassicEditor}
-        data={"<p>Hello world!</p>"}
-        config={{
-          licenseKey: "<YOUR_LICENSE_KEY>",
-          plugins: [Essentials, Paragraph, Bold, Italic, FormatPainter],
-          toolbar: [
-            "undo",
-            "redo",
-            "|",
-            "bold",
-            "italic",
-            "|",
-            "formatPainter",
-          ],
-        }}
-      /> */}
     </div>
   );
 }
