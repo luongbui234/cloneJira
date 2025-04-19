@@ -9,26 +9,35 @@ import AvatarProfileComponent from "./AvatarProfile";
 import MenuIconComponent from "./MenuIcon";
 
 export default function HeaderComponents() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const [open, setOpen] = useState(false);
+  const [isCreateTaskOpen, setIsCreateTaskOpen] = useState(false);
+
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+
+  const handleProfileOpen = () => {
+    setIsProfileOpen(true);
+  };
+  const handleProfileClose = () => {
+    setIsProfileOpen(false);
+  };
 
   const pathName = usePathname();
 
-  const handleOpen = () => {
-    setIsOpen(true);
+  const handleMenuOpen = () => {
+    setIsMenuOpen(true);
   };
 
-  const handleClose = () => {
-    setIsOpen(false);
+  const handleMenuClose = () => {
+    setIsMenuOpen(false);
   };
 
-  const showDrawer = () => {
-    setOpen(true);
+  const handleCreateTaskOpen = () => {
+    setIsCreateTaskOpen(true);
   };
 
-  const onClose = () => {
-    setOpen(false);
+  const handleCreateTaskClose = () => {
+    setIsCreateTaskOpen(false);
   };
 
   return (
@@ -41,7 +50,7 @@ export default function HeaderComponents() {
         />
         <span>JIRA</span>
       </div>
-      <MenuIconComponent handleOpen={handleOpen} />
+      <MenuIconComponent handleMenuOpen={handleMenuOpen} />
       <div className="content-center hidden desktop:block">
         <ul className="flex gap-5 items-center">
           <li>
@@ -64,20 +73,31 @@ export default function HeaderComponents() {
               Users
             </Link>
           </li>
-          <li onClick={showDrawer} className="text-white cursor-pointer">
+          <li
+            onClick={handleCreateTaskOpen}
+            className="text-white cursor-pointer"
+          >
             Create Task
           </li>
           <li>
-            <AvatarProfileComponent />
+            <AvatarProfileComponent
+              isProfileOpen={isProfileOpen}
+              handleProfileOpen={handleProfileOpen}
+              handleProfileClose={handleProfileClose}
+            />
           </li>
         </ul>
       </div>
       <MenuSideBarComponent
-        isOpen={isOpen}
-        handleClose={handleClose}
-        showDrawer={showDrawer}
+        isMenuOpen={isMenuOpen}
+        handleMenuClose={handleMenuClose}
+        handleCreateTaskOpen={handleCreateTaskOpen}
+        handleProfileOpen={handleProfileOpen}
       />
-      <CreateTaskSidebarComponent open={open} onClose={onClose} />
+      <CreateTaskSidebarComponent
+        isCreateTaskOpen={isCreateTaskOpen}
+        handleCreateTaskClose={handleCreateTaskClose}
+      />
     </nav>
   );
 }

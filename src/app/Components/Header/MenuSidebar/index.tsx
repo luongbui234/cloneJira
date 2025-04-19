@@ -18,22 +18,24 @@ import {
 import { HiLogout } from "react-icons/hi";
 
 interface Props {
-  isOpen: boolean;
-  handleClose: () => void;
-  showDrawer: () => void;
+  isMenuOpen: boolean;
+  handleMenuClose: () => void;
+  handleCreateTaskOpen: () => void;
+  handleProfileOpen: () => void;
 }
 
 export default function MenuSideBarComponent({
-  isOpen,
-  handleClose,
-  showDrawer,
+  isMenuOpen,
+  handleMenuClose,
+  handleCreateTaskOpen,
+  handleProfileOpen,
 }: Props) {
   const pathName = usePathname();
 
   return (
     <Drawer
-      open={isOpen}
-      onClose={handleClose}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
       position="right"
       className="fixed top-0 right-0 h-screen desktop:hidden"
     >
@@ -62,13 +64,15 @@ export default function MenuSideBarComponent({
               Users
             </SidebarItem>
             <SidebarItem icon={FaFileMedical}>
-              <button onClick={showDrawer} className="text-white">
+              <button onClick={handleCreateTaskOpen} className="text-white">
                 Create Task
               </button>
             </SidebarItem>
           </SidebarItemGroup>
           <SidebarItemGroup>
-            <SidebarItem icon={FaRegCircleUser}>Profile</SidebarItem>
+            <SidebarItem icon={FaRegCircleUser} onClick={handleProfileOpen}>
+              Profile
+            </SidebarItem>
           </SidebarItemGroup>
           <SidebarItemGroup>
             <SidebarItem icon={HiLogout}>Sign out</SidebarItem>

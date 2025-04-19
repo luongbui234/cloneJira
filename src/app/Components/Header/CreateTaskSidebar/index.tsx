@@ -4,11 +4,14 @@ import { FaFileMedical } from "react-icons/fa6";
 const { TextArea } = Input;
 
 interface Props {
-  open: boolean;
-  onClose: () => void;
+  isCreateTaskOpen: boolean;
+  handleCreateTaskClose: () => void;
 }
 
-export default function CreateTaskSidebarComponent({ open, onClose }: Props) {
+export default function CreateTaskSidebarComponent({
+  isCreateTaskOpen,
+  handleCreateTaskClose,
+}: Props) {
   const onFinish = (values: string) => {
     console.log("Success:", values);
   };
@@ -21,14 +24,14 @@ export default function CreateTaskSidebarComponent({ open, onClose }: Props) {
           <span className="text-xl">Create Task</span>
         </div>
       }
-      onClose={onClose}
-      open={open}
+      onClose={handleCreateTaskClose}
+      open={isCreateTaskOpen}
       placement="left"
       closable={false}
       footer={
         <div className="flex justify-end space-x-3">
-          <Button onClick={onClose}>Cancel</Button>
-          <Button onClick={onClose} type="primary">
+          <Button onClick={handleCreateTaskClose}>Cancel</Button>
+          <Button onClick={handleCreateTaskClose} type="primary">
             Create
           </Button>
         </div>
