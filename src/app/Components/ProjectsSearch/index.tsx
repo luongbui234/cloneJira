@@ -9,5 +9,13 @@ export default function ProjectsSearchComponent() {
     return console.log(value);
   };
 
-  return <Search onSearch={onSearch} allowClear enterButton size="large" />;
+  return (
+    <Search
+      onSearch={onSearch}
+      allowClear
+      enterButton
+      size="middle"
+      className="w-auto"
+    />
+  );
 }

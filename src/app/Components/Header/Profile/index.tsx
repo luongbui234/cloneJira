@@ -22,6 +22,7 @@ export default function ProfileComponent({
           <p>MY PROFILE</p>
         </div>
       }
+      centered
       open={isProfileOpen}
       onOk={handleProfileClose}
       onCancel={handleProfileClose}
