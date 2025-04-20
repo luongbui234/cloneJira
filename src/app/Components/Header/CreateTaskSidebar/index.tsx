@@ -1,4 +1,4 @@
-import { Button, Drawer, Form, Input, Select, Slider } from "antd";
+import { Button, Drawer, Form, Input, InputNumber, Select, Slider } from "antd";
 import React from "react";
 import { FaFileMedical } from "react-icons/fa6";
 const { TextArea } = Input;
@@ -172,7 +172,7 @@ export default function CreateTaskSidebarComponent({
         </Form.Item>
 
         <p>Time Tracking</p>
-        <div>
+        <div className="flex justify-between">
           <Form.Item
             label="Total estimated hours"
             name="totalEstimatedHours"
@@ -180,23 +180,7 @@ export default function CreateTaskSidebarComponent({
               { required: true, message: "Project category is required" },
             ]}
           >
-            <Select
-              placeholder={"Select a project category"}
-              options={[
-                {
-                  label: "Dự án web",
-                  value: 1,
-                },
-                {
-                  label: "Dự án phần mềm",
-                  value: 2,
-                },
-                {
-                  label: "Dự án di động",
-                  value: 3,
-                },
-              ]}
-            />
+            <InputNumber min={0} defaultValue={0} style={{ width: "120px" }} />
           </Form.Item>
 
           <Form.Item
@@ -206,31 +190,13 @@ export default function CreateTaskSidebarComponent({
               { required: true, message: "Project category is required" },
             ]}
           >
-            <Select
-              placeholder={"Select a project category"}
-              options={[
-                {
-                  label: "Dự án web",
-                  value: 1,
-                },
-                {
-                  label: "Dự án phần mềm",
-                  value: 2,
-                },
-                {
-                  label: "Dự án di động",
-                  value: 3,
-                },
-              ]}
-            />
+            <InputNumber min={0} defaultValue={0} style={{ width: "120px" }} />
           </Form.Item>
-          <div>
-            <Slider defaultValue={30} />
-            <div className="flex justify-between">
-              <span>6 hour(s) spent</span>
-              <span>3 hour(s) remaining</span>
-            </div>
-          </div>
+        </div>
+        <Slider defaultValue={30} />
+        <div className="flex justify-between">
+          <span>6 hour(s) spent</span>
+          <span>3 hour(s) remaining</span>
         </div>
 
         <Form.Item label="Descriptions">

@@ -7,12 +7,19 @@ import {
 } from "@ant-design/icons";
 import { Avatar, Button, Tooltip } from "antd";
 import React from "react";
+import AddMemberToProjectComponent from "../AddMemberToProject";
 
 interface Props {
+  isAddMemberOpen: boolean;
   handleAddMemberOpen: () => void;
+  handleAddMemberClose: () => void;
 }
 
-export default function MembersTaskComponent({ handleAddMemberOpen }: Props) {
+export default function MembersTaskComponent({
+  isAddMemberOpen,
+  handleAddMemberOpen,
+  handleAddMemberClose,
+}: Props) {
   return (
     <div>
       <p>Members: </p>
@@ -40,6 +47,10 @@ export default function MembersTaskComponent({ handleAddMemberOpen }: Props) {
           <PlusOutlined />
         </Button>
       </div>
+      <AddMemberToProjectComponent
+        isAddMemberOpen={isAddMemberOpen}
+        handleAddMemberClose={handleAddMemberClose}
+      />
     </div>
   );
 }

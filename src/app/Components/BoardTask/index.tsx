@@ -9,14 +9,30 @@ import {
 } from "@ant-design/icons";
 import { Avatar, Card, Tag, Tooltip } from "antd";
 import React from "react";
+import EditTaskComponent from "./EditTask";
 
-export default function BoardTaskComponent() {
+interface Props {
+  isEditTaskOpen: boolean;
+  handleEditTaskOpen: () => void;
+  handleEditTaskClose: () => void;
+}
+
+export default function BoardTaskComponent({
+  isEditTaskOpen,
+  handleEditTaskOpen,
+  handleEditTaskClose,
+}: Props) {
   return (
     <div className="flex justify-center gap-5 flex-wrap">
       <div className="w-80 h-fit p-2 bg-gray-100 space-y-2 rounded-md">
         <span className="bg-gray-200 font-medium px-2 rounded-md">BACKLOG</span>
         <div>
-          <Card size="small" title={<p>Loi phan mem</p>} className="shadow">
+          <Card
+            onClick={handleEditTaskOpen}
+            size="small"
+            title={<p>Loi phan mem</p>}
+            className="shadow cursor-grab"
+          >
             <div className="flex justify-between">
               <div className="flex space-x-1">
                 <BugOutlined className="text-xl text-red-500" />
@@ -54,7 +70,12 @@ export default function BoardTaskComponent() {
         <span className="bg-indigo-200 font-medium px-2 rounded-md">
           SELECTED FOR DEVELOPMENT
         </span>
-        <Card size="small" title={<p>Loi phan mem</p>} className="shadow">
+        <Card
+          onClick={handleEditTaskOpen}
+          size="small"
+          title={<p>Loi phan mem</p>}
+          className="shadow cursor-grab"
+        >
           <div className="flex justify-between">
             <div className="flex space-x-1">
               <FileAddOutlined className="text-xl text-green-500" />
@@ -91,6 +112,10 @@ export default function BoardTaskComponent() {
       <div className="w-80 h-fit p-2 bg-gray-100 space-y-2 rounded-md">
         <span className="bg-green-200 font-medium px-2 rounded-md">DONE</span>
       </div>
+      <EditTaskComponent
+        isEditTaskOpen={isEditTaskOpen}
+        handleEditTaskClose={handleEditTaskClose}
+      />
     </div>
   );
 }
