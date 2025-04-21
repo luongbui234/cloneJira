@@ -13,15 +13,6 @@ export default function HeaderComponents() {
 
   const [isCreateTaskOpen, setIsCreateTaskOpen] = useState(false);
 
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
-
-  const handleProfileOpen = () => {
-    setIsProfileOpen(true);
-  };
-  const handleProfileClose = () => {
-    setIsProfileOpen(false);
-  };
-
   const pathName = usePathname();
 
   const handleMenuOpen = () => {
@@ -80,11 +71,7 @@ export default function HeaderComponents() {
             Create Task
           </li>
           <li>
-            <AvatarProfileComponent
-              isProfileOpen={isProfileOpen}
-              handleProfileOpen={handleProfileOpen}
-              handleProfileClose={handleProfileClose}
-            />
+            <AvatarProfileComponent pathName={pathName} />
           </li>
         </ul>
       </div>
@@ -92,7 +79,6 @@ export default function HeaderComponents() {
         isMenuOpen={isMenuOpen}
         handleMenuClose={handleMenuClose}
         handleCreateTaskOpen={handleCreateTaskOpen}
-        handleProfileOpen={handleProfileOpen}
       />
       <CreateTaskSidebarComponent
         isCreateTaskOpen={isCreateTaskOpen}

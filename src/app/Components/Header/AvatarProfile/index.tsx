@@ -7,19 +7,12 @@ import {
 import React from "react";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { HiLogout } from "react-icons/hi";
-import ProfileComponent from "../Profile";
 
 interface Props {
-  isProfileOpen: boolean;
-  handleProfileOpen: () => void;
-  handleProfileClose: () => void;
+  pathName: string;
 }
 
-export default function AvatarProfileComponent({
-  isProfileOpen,
-  handleProfileOpen,
-  handleProfileClose,
-}: Props) {
+export default function AvatarProfileComponent({ pathName }: Props) {
   return (
     <>
       <Dropdown
@@ -36,16 +29,19 @@ export default function AvatarProfileComponent({
         <DropdownHeader>
           <p className="text-gray-400">Bui Van Luong</p>
         </DropdownHeader>
-        <DropdownItem icon={FaRegCircleUser} onClick={handleProfileOpen}>
+        <DropdownItem
+          icon={FaRegCircleUser}
+          href="/profile"
+          style={{
+            color: pathName === "/profile" ? "#3f83f8" : "#ffffff",
+            backgroundColor: pathName === "/profile" ? "#fdba8c" : "",
+          }}
+        >
           Profile
         </DropdownItem>
         <DropdownDivider />
         <DropdownItem icon={HiLogout}>Sign out</DropdownItem>
       </Dropdown>
-      <ProfileComponent
-        isProfileOpen={isProfileOpen}
-        handleProfileClose={handleProfileClose}
-      />
     </>
   );
 }

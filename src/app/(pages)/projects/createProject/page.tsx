@@ -2,7 +2,6 @@
 
 import React from "react";
 import { Button, Form, Input, Select } from "antd";
-import Link from "next/link";
 const { TextArea } = Input;
 
 export default function CreateProjectPage() {
@@ -56,8 +55,8 @@ export default function CreateProjectPage() {
         </Form.Item>
 
         <Form.Item label={null}>
-          <Button type="default" className="bg-gray-300">
-            <Link href={"/projects"}>Cancel</Link>
+          <Button type="default" href="/projects" className="bg-gray-300">
+            Cancel
           </Button>
           <Button type="primary" htmlType="submit" className="mx-3">
             Create

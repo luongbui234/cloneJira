@@ -1,8 +1,19 @@
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Button, Descriptions, Table } from "antd";
 import React from "react";
+import EditUserComponent from "./EditUser";
 
-export default function UsersTableComponent() {
+interface Props {
+  isEditUserOpen: boolean;
+  handleEditUserOpen: () => void;
+  handleEditUserClose: () => void;
+}
+
+export default function UsersTableComponent({
+  isEditUserOpen,
+  handleEditUserOpen,
+  handleEditUserClose,
+}: Props) {
   const itemsMobile = [
     {
       key: 1,
@@ -34,7 +45,7 @@ export default function UsersTableComponent() {
       label: <strong>Actions</strong>,
       children: (
         <div className="space-x-2">
-          <Button type="primary">
+          <Button type="primary" onClick={handleEditUserOpen}>
             <EditOutlined />
           </Button>
           <Button danger>
@@ -54,7 +65,7 @@ export default function UsersTableComponent() {
       phoneNumber: "0123456789",
       action: (
         <div className="space-x-2">
-          <Button type="primary">
+          <Button type="primary" onClick={handleEditUserOpen}>
             <EditOutlined />
           </Button>
           <Button danger>
@@ -117,6 +128,10 @@ export default function UsersTableComponent() {
         bordered={true}
         size="small"
         className="hidden ipad:block border-2 border-green-500 rounded-xl"
+      />
+      <EditUserComponent
+        isEditUserOpen={isEditUserOpen}
+        handleEditUserClose={handleEditUserClose}
       />
     </>
   );

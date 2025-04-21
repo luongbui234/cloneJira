@@ -1,37 +1,26 @@
-import { Avatar, Form, Input, Modal } from "antd";
+"use client";
+
+import { Avatar, Button, Form, Input } from "antd";
 import React from "react";
 
-interface Props {
-  isProfileOpen: boolean;
-  handleProfileClose: () => void;
-}
-
-export default function ProfileComponent({
-  isProfileOpen,
-  handleProfileClose,
-}: Props) {
+export default function ProfilePage() {
   const onFinish = (values: string) => {
     console.log("Success:", values);
   };
 
   return (
-    <Modal
-      title={
-        <div className="flex items-center gap-2">
-          <Avatar style={{ backgroundColor: "#f56a00" }}>K</Avatar>
-          <p>MY PROFILE</p>
-        </div>
-      }
-      centered
-      open={isProfileOpen}
-      onOk={handleProfileClose}
-      onCancel={handleProfileClose}
-    >
+    <div className="flex flex-wrap ipad:flex-nowrap justify-center gap-10 mt-5">
+      <div className="text-center">
+        <Avatar className="size-40" style={{ backgroundColor: "#f56a00" }}>
+          K
+        </Avatar>
+        <p className="text-2xl font-bold">luong bui</p>
+      </div>
       <Form
         name="basic"
         layout="vertical"
         onFinish={onFinish}
-        className="w-full"
+        className="w-full ipad:w-2/5 border rounded-md p-2"
       >
         <Form.Item
           label="ID"
@@ -101,7 +90,16 @@ export default function ProfileComponent({
         >
           <Input.Password />
         </Form.Item>
+
+        <Form.Item>
+          <Button type="default" href="/projects" className="bg-gray-300">
+            Cancel
+          </Button>
+          <Button type="primary" htmlType="submit" className="mx-3">
+            Update
+          </Button>
+        </Form.Item>
       </Form>
-    </Modal>
+    </div>
   );
 }

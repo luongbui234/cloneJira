@@ -21,14 +21,12 @@ interface Props {
   isMenuOpen: boolean;
   handleMenuClose: () => void;
   handleCreateTaskOpen: () => void;
-  handleProfileOpen: () => void;
 }
 
 export default function MenuSideBarComponent({
   isMenuOpen,
   handleMenuClose,
   handleCreateTaskOpen,
-  handleProfileOpen,
 }: Props) {
   const pathName = usePathname();
 
@@ -70,7 +68,14 @@ export default function MenuSideBarComponent({
             </SidebarItem>
           </SidebarItemGroup>
           <SidebarItemGroup>
-            <SidebarItem icon={FaRegCircleUser} onClick={handleProfileOpen}>
+            <SidebarItem
+              icon={FaRegCircleUser}
+              href="/profile"
+              style={{
+                color: pathName === "/profile" ? "#3f83f8" : "#ffffff",
+                backgroundColor: pathName === "/profile" ? "#fdba8c" : "",
+              }}
+            >
               Profile
             </SidebarItem>
           </SidebarItemGroup>
