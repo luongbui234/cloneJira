@@ -1,5 +1,9 @@
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Button, Descriptions, Table } from "antd";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  QuestionCircleOutlined,
+} from "@ant-design/icons";
+import { Button, Descriptions, message, Popconfirm, Table } from "antd";
 import React from "react";
 import EditUserComponent from "./EditUser";
 
@@ -14,47 +18,12 @@ export default function UsersTableComponent({
   handleEditUserOpen,
   handleEditUserClose,
 }: Props) {
-  const itemsMobile = [
-    {
-      key: 1,
-      label: <strong>No.</strong>,
-      children: 1,
-    },
-    {
-      key: 2,
-      label: <strong>Name</strong>,
-      children: "luong",
-    },
-    {
-      key: 3,
-      label: <strong>User ID</strong>,
-      children: 1111,
-    },
-    {
-      key: 4,
-      label: <strong>Email</strong>,
-      children: "luong@gmail.com",
-    },
-    {
-      key: 5,
-      label: <strong>Phone Number</strong>,
-      children: "0123456789",
-    },
-    {
-      key: 6,
-      label: <strong>Actions</strong>,
-      children: (
-        <div className="space-x-2">
-          <Button type="primary" onClick={handleEditUserOpen}>
-            <EditOutlined />
-          </Button>
-          <Button danger>
-            <DeleteOutlined />
-          </Button>
-        </div>
-      ),
-    },
-  ];
+  const confirm = () => {
+    message.success("Click on Yes");
+  };
+  const cancel = () => {
+    message.error("Click on No");
+  };
 
   const dataSource = [
     {
@@ -68,9 +37,18 @@ export default function UsersTableComponent({
           <Button type="primary" onClick={handleEditUserOpen}>
             <EditOutlined />
           </Button>
-          <Button danger>
-            <DeleteOutlined />
-          </Button>
+          <Popconfirm
+            icon={<QuestionCircleOutlined style={{ color: "red" }} />}
+            title="Are you sure to delete this user?"
+            onConfirm={confirm}
+            onCancel={cancel}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button danger>
+              <DeleteOutlined />
+            </Button>
+          </Popconfirm>
         </div>
       ),
     },
@@ -78,7 +56,66 @@ export default function UsersTableComponent({
 
   const dataSourceMobile = [
     {
-      dataMobile: <Descriptions bordered items={itemsMobile} />,
+      dataMobile: (
+        <Descriptions
+          bordered
+          items={[
+            {
+              key: 1,
+              label: <strong>No.</strong>,
+              children: 1,
+            },
+            {
+              key: 2,
+              label: <strong>Name</strong>,
+              children: "luong",
+            },
+            {
+              key: 3,
+              label: <strong>User ID</strong>,
+              children: 1111,
+            },
+            {
+              key: 4,
+              label: <strong>Email</strong>,
+              children: "luong@gmail.com",
+            },
+            {
+              key: 5,
+              label: <strong>Phone Number</strong>,
+              children: "0123456789",
+            },
+            {
+              key: 6,
+              label: <strong>Actions</strong>,
+              children: (
+                <div className="space-x-2">
+                  <Button type="primary" onClick={handleEditUserOpen}>
+                    <EditOutlined />
+                  </Button>
+                  <Popconfirm
+                    icon={
+                      <QuestionCircleOutlined
+                        style={{ color: "red" }}
+                        className="text-red-500"
+                      />
+                    }
+                    title="Are you sure to delete this user?"
+                    onConfirm={confirm}
+                    onCancel={cancel}
+                    okText="Yes"
+                    cancelText="No"
+                  >
+                    <Button danger>
+                      <DeleteOutlined />
+                    </Button>
+                  </Popconfirm>
+                </div>
+              ),
+            },
+          ]}
+        />
+      ),
     },
   ];
 
