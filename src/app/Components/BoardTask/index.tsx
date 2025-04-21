@@ -3,13 +3,15 @@
 import {
   AntDesignOutlined,
   BugOutlined,
+  CloseOutlined,
   FileAddOutlined,
   PlusOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Avatar, Card, Tag, Tooltip } from "antd";
-import React from "react";
+import { Avatar, Button, Card, Input, Tag, Tooltip } from "antd";
+import React, { useState } from "react";
 import EditTaskComponent from "./EditTask";
+const { TextArea } = Input;
 
 interface Props {
   isEditTaskOpen: boolean;
@@ -22,6 +24,45 @@ export default function BoardTaskComponent({
   handleEditTaskOpen,
   handleEditTaskClose,
 }: Props) {
+  const [isCardOpen, setIsCardOpen] = useState(false);
+
+  const [isNameTaskOpen, setIsNameTaskOpen] = useState(false);
+
+  const [isDescTaskOpen, setIsDescTaskOpen] = useState(false);
+
+  const [isEstimateOpen, setIsEstimateOpen] = useState(false);
+
+  const handleCardOpen = () => {
+    setIsCardOpen(true);
+  };
+  const handleCardClose = () => {
+    setIsCardOpen(false);
+  };
+
+  const handleNameTaskOpen = () => {
+    setIsNameTaskOpen(true);
+  };
+
+  const handleNameTaskClose = () => {
+    setIsNameTaskOpen(false);
+  };
+
+  const handleDescTaskOpen = () => {
+    setIsDescTaskOpen(true);
+  };
+
+  const handleDescTaskClose = () => {
+    setIsDescTaskOpen(false);
+  };
+
+  const handleEstimateOpen = () => {
+    setIsEstimateOpen(true);
+  };
+
+  const handleEstimateClose = () => {
+    setIsEstimateOpen(false);
+  };
+
   return (
     <div className="flex justify-center gap-5 flex-wrap">
       <div className="w-80 h-fit p-2 bg-gray-100 space-y-2 rounded-md">
@@ -61,10 +102,30 @@ export default function BoardTaskComponent({
             </div>
           </Card>
         </div>
-        <button className="hover:bg-slate-300 w-full rounded-md">
-          <PlusOutlined />
-          Create
-        </button>
+        {isCardOpen ? (
+          <div className="space-y-2">
+            <TextArea
+              rows={2}
+              showCount
+              onBlur={handleCardClose}
+              autoFocus={isCardOpen}
+              placeholder="What needs to be done?"
+            />
+            <Button onClick={handleCardClose} type="primary">
+              Add
+            </Button>
+            <Button
+              onClick={handleCardClose}
+              icon={<CloseOutlined />}
+              className="mx-2"
+            />
+          </div>
+        ) : (
+          <Button onClick={handleCardOpen} className="w-full">
+            <PlusOutlined />
+            Create
+          </Button>
+        )}
       </div>
       <div className="w-80 h-fit p-2 bg-gray-100 space-y-2 rounded-md">
         <span className="bg-indigo-200 font-medium px-2 rounded-md">
@@ -115,6 +176,15 @@ export default function BoardTaskComponent({
       <EditTaskComponent
         isEditTaskOpen={isEditTaskOpen}
         handleEditTaskClose={handleEditTaskClose}
+        isNameTaskOpen={isNameTaskOpen}
+        handleNameTaskOpen={handleNameTaskOpen}
+        handleNameTaskClose={handleNameTaskClose}
+        isDescTaskOpen={isDescTaskOpen}
+        handleDescTaskOpen={handleDescTaskOpen}
+        handleDescTaskClose={handleDescTaskClose}
+        isEstimateOpen={isEstimateOpen}
+        handleEstimateOpen={handleEstimateOpen}
+        handleEstimateClose={handleEstimateClose}
       />
     </div>
   );
