@@ -1,47 +1,38 @@
-import {
-  Dropdown,
-  DropdownDivider,
-  DropdownHeader,
-  DropdownItem,
-} from "flowbite-react";
+import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
+import { Avatar, Dropdown } from "antd";
 import React from "react";
-import { FaRegCircleUser } from "react-icons/fa6";
-import { HiLogout } from "react-icons/hi";
 
 interface Props {
-  pathName: string;
+  handleSignout: () => void;
 }
 
-export default function AvatarProfileComponent({ pathName }: Props) {
+export default function AvatarProfileComponent({ handleSignout }: Props) {
+  const items = [
+    {
+      key: 1,
+      label: "Bui Van Luong",
+    },
+    {
+      type: "divider",
+    },
+    {
+      key: 2,
+      icon: <UserOutlined />,
+      label: "Profile",
+    },
+    {
+      type: "divider",
+    },
+    {
+      key: 3,
+      icon: <LogoutOutlined />,
+      label: <span onClick={handleSignout}>Sign out</span>,
+    },
+  ];
+
   return (
-    <>
-      <Dropdown
-        trigger="hover"
-        arrowIcon={false}
-        renderTrigger={() => (
-          <img
-            className="w-10 h-10 rounded-full"
-            src="https://flowbite.com/docs/images/logo.svg"
-            alt="Rounded avatar"
-          />
-        )}
-      >
-        <DropdownHeader>
-          <p className="text-gray-400">Bui Van Luong</p>
-        </DropdownHeader>
-        <DropdownItem
-          icon={FaRegCircleUser}
-          href="/profile"
-          style={{
-            color: pathName === "/profile" ? "#3f83f8" : "#ffffff",
-            backgroundColor: pathName === "/profile" ? "#fdba8c" : "",
-          }}
-        >
-          Profile
-        </DropdownItem>
-        <DropdownDivider />
-        <DropdownItem icon={HiLogout}>Sign out</DropdownItem>
-      </Dropdown>
-    </>
+    <Dropdown menu={{ items, selectable: true }} placement="bottomRight">
+      <Avatar style={{ backgroundColor: "#f56a00" }}>K</Avatar>
+    </Dropdown>
   );
 }

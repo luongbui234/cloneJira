@@ -1,89 +1,84 @@
 import {
-  Drawer,
-  DrawerHeader,
-  Sidebar,
-  SidebarItem,
-  SidebarItemGroup,
-  SidebarItems,
-} from "flowbite-react";
+  FileAddOutlined,
+  FolderOutlined,
+  LogoutOutlined,
+  MenuOutlined,
+  ProfileOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
+import { Button, Divider, Drawer } from "antd";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
-import {
-  FaBars,
-  FaFileMedical,
-  FaFolder,
-  FaRegCircleUser,
-  FaUsers,
-} from "react-icons/fa6";
-import { HiLogout } from "react-icons/hi";
 
 interface Props {
   isMenuOpen: boolean;
   handleMenuClose: () => void;
   handleCreateTaskOpen: () => void;
+  handleSignout: () => void;
 }
 
 export default function MenuSideBarComponent({
   isMenuOpen,
   handleMenuClose,
   handleCreateTaskOpen,
+  handleSignout,
 }: Props) {
   const pathName = usePathname();
 
   return (
-    <Drawer
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-      position="right"
-      className="fixed top-0 right-0 h-screen desktop:hidden"
-    >
-      <DrawerHeader title="Bui Van Luong" titleIcon={FaBars} />
-      <Sidebar>
-        <SidebarItems>
-          <SidebarItemGroup>
-            <SidebarItem
-              icon={FaFolder}
-              href="/projects"
-              style={{
-                color: pathName === "/projects" ? "#3f83f8" : "#ffffff",
-                backgroundColor: pathName === "/projects" ? "#fdba8c" : "",
-              }}
-            >
-              Projects
-            </SidebarItem>
-            <SidebarItem
-              icon={FaUsers}
-              href="/users"
-              style={{
-                color: pathName === "/users" ? "#3f83f8" : "#ffffff",
-                backgroundColor: pathName === "/users" ? "#fdba8c" : "",
-              }}
-            >
-              Users
-            </SidebarItem>
-            <SidebarItem icon={FaFileMedical}>
-              <button onClick={handleCreateTaskOpen} className="text-white">
-                Create Task
-              </button>
-            </SidebarItem>
-          </SidebarItemGroup>
-          <SidebarItemGroup>
-            <SidebarItem
-              icon={FaRegCircleUser}
-              href="/profile"
-              style={{
-                color: pathName === "/profile" ? "#3f83f8" : "#ffffff",
-                backgroundColor: pathName === "/profile" ? "#fdba8c" : "",
-              }}
-            >
-              Profile
-            </SidebarItem>
-          </SidebarItemGroup>
-          <SidebarItemGroup>
-            <SidebarItem icon={HiLogout}>Sign out</SidebarItem>
-          </SidebarItemGroup>
-        </SidebarItems>
-      </Sidebar>
+    <Drawer title={"Menu"} open={isMenuOpen} onClose={handleMenuClose} footer>
+      <div className="space-y-3">
+        <Link
+          href={"/projects"}
+          className={`text-xl block p-2 rounded-lg hover:bg-[#fdba8c] ${
+            pathName.includes("/projects")
+              ? "text-white bg-[#fdba8c]"
+              : "text-black"
+          }`}
+        >
+          <FolderOutlined />
+          <span> Projects</span>
+        </Link>
+        <Link
+          href={"/users"}
+          className={`text-xl block p-2 rounded-lg hover:bg-[#fdba8c]  ${
+            pathName === "/users" ? "text-white bg-[#fdba8c]" : "text-black"
+          }`}
+        >
+          <UserOutlined />
+          <span> Users</span>
+        </Link>
+        <Button
+          block
+          icon={<FileAddOutlined />}
+          type="text"
+          className="text-xl block rounded-lg hover:bg-[#fdba8c] text-black"
+          onClick={handleCreateTaskOpen}
+        >
+          <span> Create Task</span>
+        </Button>
+        <Divider />
+        <Link
+          href={"/profile"}
+          className={`text-xl block p-2 rounded-lg hover:bg-[#fdba8c]  ${
+            pathName === "/profile" ? "text-white bg-[#fdba8c]" : "text-black"
+          }`}
+        >
+          <ProfileOutlined />
+          <span> Profile</span>
+        </Link>
+        <Divider />
+        <Button
+          block
+          icon={<LogoutOutlined />}
+          type="text"
+          className="text-xl rounded-lg hover:[#fdba8c] text-black"
+          onClick={handleSignout}
+        >
+          <span> Sign out</span>
+        </Button>
+      </div>
     </Drawer>
   );
 }
