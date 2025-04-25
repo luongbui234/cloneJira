@@ -7,9 +7,10 @@ export const getLocalStorage = () => {
   let meJson: string | null = null;
 
   if (typeof window !== "undefined" && window.localStorage) {
+    // kiểm tra để tránh lỗi trong môi trường không có localStorage
     meJson = localStorage.getItem("ME");
   }
-  const me = meJson ? JSON.parse(meJson) : "";
+  const me = meJson ? JSON.parse(meJson) : ""; // JSON.parse() => không parse giá trị null
   return me;
 };
 
@@ -25,6 +26,7 @@ export const https = async (
       TokenCybersoft: CYBER_TOKEN,
       Authorization: `Bearer ${getLocalStorage()?.accessToken}`,
     },
+    //spread syntax
     ...(body &&
     method.toUpperCase() !== "GET" &&
     method.toUpperCase() !== "DELETE"
