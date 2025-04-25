@@ -1,5 +1,5 @@
 import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
-import { Avatar, Dropdown } from "antd";
+import { Avatar, Dropdown, MenuProps } from "antd";
 import React from "react";
 
 interface Props {
@@ -7,7 +7,7 @@ interface Props {
 }
 
 export default function AvatarProfileComponent({ handleSignout }: Props) {
-  const items = [
+  const items: MenuProps["items"] = [
     {
       key: 1,
       label: "Bui Van Luong",

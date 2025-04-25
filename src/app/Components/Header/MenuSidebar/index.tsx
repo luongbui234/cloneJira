@@ -2,7 +2,6 @@ import {
   FileAddOutlined,
   FolderOutlined,
   LogoutOutlined,
-  MenuOutlined,
   ProfileOutlined,
   UserOutlined,
 } from "@ant-design/icons";
