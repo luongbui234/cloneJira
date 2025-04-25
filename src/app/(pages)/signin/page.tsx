@@ -6,6 +6,7 @@ import { Signin } from "@/app/types/signin";
 import { setMe } from "@/redux/meSlice";
 import { useRouter } from "next/navigation";
 import React from "react";
+import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 
 export default function SigninPage() {
@@ -13,12 +14,17 @@ export default function SigninPage() {
 
   const router = useRouter();
 
-  const handleSignin = async (data: Signin) => {
+  const onFinish = async (data: Signin) => {
     const action = await signinService(data);
-    dispatch(setMe(action.content));
-    const meJson = JSON.stringify(action.content);
-    localStorage.setItem("ME", meJson);
-    router.push("/projects");
+    if (action.statusCode === 200) {
+      dispatch(setMe(action.content));
+      const meJson = JSON.stringify(action.content);
+      localStorage.setItem("ME", meJson);
+      router.push("/projects");
+      toast.success("Signin successfully");
+    } else {
+      toast.error("Incorrect email or password");
+    }
   };
 
   return (
@@ -27,7 +33,7 @@ export default function SigninPage() {
         <img src="/signin.png" alt="" />
       </div>
       <div className="w-full desktop:w-1/2 flex flex-col justify-center items-center">
-        <SigninFormComponent handleSignin={handleSignin} />
+        <SigninFormComponent onFinish={onFinish} />
       </div>
     </div>
   );

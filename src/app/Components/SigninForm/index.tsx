@@ -6,13 +6,13 @@ import React from "react";
 import { FaFacebook } from "react-icons/fa6";
 
 interface Props {
-  handleSignin: (data: Signin) => void;
+  onFinish: (data: Signin) => void;
 }
 
-export default function SigninFormComponent({ handleSignin }: Props) {
+export default function SigninFormComponent({ onFinish }: Props) {
   return (
     <>
-      <Form name="signin" onFinish={handleSignin} autoComplete="off">
+      <Form name="signin" onFinish={onFinish} autoComplete="off">
         <p className="text-2xl text-center m-4">SIGN IN</p>
         <Form.Item
           name="email"

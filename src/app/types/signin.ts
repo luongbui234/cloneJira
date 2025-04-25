@@ -3,11 +3,9 @@ export interface Signin {
   passWord: string;
 }
 
-export interface User {
-  id: number;
+export interface Signup {
   email: string;
-  avatar: string;
-  phoneNumber: string;
+  passWord: string;
   name: string;
-  accessToken: string;
+  phoneNumber: string;
 }

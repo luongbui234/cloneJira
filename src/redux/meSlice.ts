@@ -1,13 +1,8 @@
+import { getLocalStorage } from "@/app/services/config";
 import { createSlice } from "@reduxjs/toolkit";
 
-let meJson: string | null = null;
-
-if (typeof window !== "undefined" && window.localStorage) {
-  meJson = localStorage.getItem("ME");
-}
-
 const initialState = {
-  me: meJson ? JSON.parse(meJson) : null,
+  me: getLocalStorage(),
 };
 
 const meSlice = createSlice({

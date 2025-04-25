@@ -1,5 +1,6 @@
 "use client";
 
+import { signupService } from "@/app/services/userService";
 import { Signin } from "@/app/types/signin";
 import {
   LockOutlined,
@@ -10,16 +11,24 @@ import {
 import { Button, Form, Input } from "antd";
 import Link from "next/link";
 import React from "react";
+import toast from "react-hot-toast";
 import { FaFacebook } from "react-icons/fa6";
 
 export default function SignupPage() {
-  const handleSignup = (value: Signin) => {
-    console.log(value);
+  const [form] = Form.useForm();
+  const handleSignup = async (data: Signin) => {
+    const action = await signupService(data);
+    if (action.statusCode === 200) {
+      toast.success("Signup successfully");
+      form.resetFields();
+    } else {
+      toast.error(action.message);
+    }
   };
 
   return (
     <div className="h-screen flex flex-col justify-center items-center">
-      <Form name="signup" onFinish={handleSignup} autoComplete="off">
+      <Form form={form} name="signup" onFinish={handleSignup}>
         <p className="text-2xl text-center m-4">SIGN UP</p>
         <Form.Item
           name="email"
@@ -58,6 +67,7 @@ export default function SignupPage() {
           ]}
         >
           <Input
+            type="number"
             prefix={<PhoneOutlined />}
             placeholder="phoneNumber"
             size="large"
