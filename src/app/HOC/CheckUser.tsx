@@ -5,11 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import React, { ReactNode, useEffect } from "react";
 import { useSelector } from "react-redux";
 
-export default function CheckUserComponent({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default function CheckUser({ children }: { children: ReactNode }) {
   const { me } = useSelector((state: RootState) => {
     return state.me;
   });

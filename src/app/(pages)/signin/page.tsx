@@ -2,7 +2,7 @@
 
 import SigninFormComponent from "@/app/Components/SigninForm";
 import { signinService } from "@/app/services/userService";
-import { Signin } from "@/app/types/signin";
+import { Signin } from "@/app/types/user";
 import { setMe } from "@/redux/meSlice";
 import { useRouter } from "next/navigation";
 import React from "react";

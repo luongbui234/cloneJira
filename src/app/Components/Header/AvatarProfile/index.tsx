@@ -1,16 +1,20 @@
+import { Me } from "@/app/types/user";
 import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar, Dropdown, MenuProps } from "antd";
+import Link from "next/link";
 import React from "react";
 
 interface Props {
+  me: Me;
   handleSignout: () => void;
 }
 
-export default function AvatarProfileComponent({ handleSignout }: Props) {
+export default function AvatarProfileComponent({ me, handleSignout }: Props) {
   const items: MenuProps["items"] = [
     {
       key: 1,
-      label: "Bui Van Luong",
+      label: me.name,
+      disabled: true,
     },
     {
       type: "divider",
@@ -18,7 +22,7 @@ export default function AvatarProfileComponent({ handleSignout }: Props) {
     {
       key: 2,
       icon: <UserOutlined />,
-      label: "Profile",
+      label: <Link href={"/profile"}>Profile</Link>,
     },
     {
       type: "divider",
@@ -32,7 +36,7 @@ export default function AvatarProfileComponent({ handleSignout }: Props) {
 
   return (
     <Dropdown menu={{ items, selectable: true }} placement="bottomRight">
-      <Avatar style={{ backgroundColor: "#f56a00" }}>K</Avatar>
+      <Avatar src={me.avatar} />
     </Dropdown>
   );
 }

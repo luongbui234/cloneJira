@@ -4,7 +4,7 @@ import "./globals.css";
 import HeaderComponents from "./Components/Header";
 import { StoreProvider } from "./store/StoreProvider";
 import { Toaster } from "react-hot-toast";
-import CheckUserComponent from "./Components/CheckUser";
+import CheckUser from "./HOC/CheckUser";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,7 +34,7 @@ export default function RootLayout({
         >
           <Toaster />
           <HeaderComponents />
-          <CheckUserComponent>{children}</CheckUserComponent>
+          <CheckUser>{children}</CheckUser>
         </body>
       </html>
     </StoreProvider>

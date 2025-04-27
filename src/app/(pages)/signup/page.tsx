@@ -1,7 +1,7 @@
 "use client";
 
 import { signupService } from "@/app/services/userService";
-import { Signin } from "@/app/types/signin";
+import { Signup } from "@/app/types/user";
 import {
   LockOutlined,
   MailOutlined,
@@ -16,7 +16,7 @@ import { FaFacebook } from "react-icons/fa6";
 
 export default function SignupPage() {
   const [form] = Form.useForm();
-  const handleSignup = async (data: Signin) => {
+  const handleSignup = async (data: Signup) => {
     const action = await signupService(data);
     if (action.statusCode === 200) {
       toast.success("Signup successfully");

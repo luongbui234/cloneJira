@@ -1,4 +1,4 @@
-import { Signin, Signup } from "../types/signin";
+import { Signin, Signup } from "../types/user";
 
 export const CYBER_TOKEN =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCA3OSIsIkhldEhhblN0cmluZyI6IjAzLzA5LzIwMjUiLCJIZXRIYW5UaW1lIjoiMTc1Njg1NzYwMDAwMCIsIm5iZiI6MTcyOTcwMjgwMCwiZXhwIjoxNzU3MDA1MjAwfQ.nPo29RkxTkE_C16RhJnxw90M3v3cu3Ur91a47F5epxA";
@@ -17,7 +17,7 @@ export const getLocalStorage = () => {
 export const https = async (
   url: string,
   method: string,
-  body: Signin | Signup
+  body: null | Signin | Signup
 ) => {
   const options = {
     method: method.toUpperCase(),

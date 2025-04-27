@@ -1,4 +1,4 @@
-import { Signin } from "@/app/types/signin";
+import { Signin } from "@/app/types/user";
 import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import { Button, Form, Input } from "antd";
 import Link from "next/link";

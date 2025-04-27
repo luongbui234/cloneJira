@@ -9,6 +9,7 @@ import AvatarProfileComponent from "./AvatarProfile";
 import MenuIconComponent from "./MenuIcon";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
+import { Button } from "antd";
 
 export default function HeaderComponents() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -48,14 +49,9 @@ export default function HeaderComponents() {
   return (
     me && (
       <nav className="p-3 bg-orange-300 flex justify-between">
-        <div className="flex items-center gap-2">
-          <img
-            src="https://flowbite.com/docs/images/logo.svg"
-            className="h-8"
-            alt="Flowbite Logo"
-          />
-          <span>JIRA</span>
-        </div>
+        <Button type="text" href="/projects">
+          <img src="/Jira_Logo.svg.png" className="h-8" alt="Jira Logo" />
+        </Button>
         <MenuIconComponent handleMenuOpen={handleMenuOpen} />
         <div className="content-center hidden desktop:block">
           <ul className="flex gap-5 items-center">
@@ -88,7 +84,7 @@ export default function HeaderComponents() {
               Create Task
             </li>
             <li>
-              <AvatarProfileComponent handleSignout={handleSignout} />
+              <AvatarProfileComponent me={me} handleSignout={handleSignout} />
             </li>
           </ul>
         </div>
