@@ -1,4 +1,4 @@
-import { Signin, Signup } from "../types/user";
+import { Signin, Signup } from "../types/me";
 
 export const CYBER_TOKEN =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCA3OSIsIkhldEhhblN0cmluZyI6IjAzLzA5LzIwMjUiLCJIZXRIYW5UaW1lIjoiMTc1Njg1NzYwMDAwMCIsIm5iZiI6MTcyOTcwMjgwMCwiZXhwIjoxNzU3MDA1MjAwfQ.nPo29RkxTkE_C16RhJnxw90M3v3cu3Ur91a47F5epxA";
@@ -7,7 +7,7 @@ export const getLocalStorage = () => {
   let meJson: string | null = null;
 
   if (typeof window !== "undefined" && window.localStorage) {
-    // kiểm tra để tránh lỗi trong môi trường không có localStorage
+    // kiểm tra trong môi trường có localStorage không?
     meJson = localStorage.getItem("ME");
   }
   const me = meJson ? JSON.parse(meJson) : ""; // JSON.parse() => không parse giá trị null

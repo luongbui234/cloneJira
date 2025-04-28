@@ -1,36 +1,55 @@
+import { RootState } from "@/app/store/store";
+import { User } from "@/app/types/user";
 import { Form, Input, Modal } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 interface Props {
   isEditUserOpen: boolean;
   handleEditUserClose: () => void;
+  handleUpdateUser: (data: User) => void;
 }
 
 export default function EditUserComponent({
   isEditUserOpen,
   handleEditUserClose,
+  handleUpdateUser,
 }: Props) {
-  const onFinish = (values: string) => {
-    console.log("Success:", values);
-  };
+  const [form] = Form.useForm();
+
+  const { editUser } = useSelector((state: RootState) => {
+    return state.user;
+  });
+
+  useEffect(() => {
+    form.setFieldsValue({
+      id: editUser.userId,
+      email: editUser.email,
+      passWord: "",
+      passwordConfirmation: "",
+      name: editUser.name,
+      phoneNumber: editUser.phoneNumber,
+    });
+  }, [form, editUser]);
 
   return (
     <Modal
-      title={"Edit USer"}
+      title={"Edit User"}
       centered
       open={isEditUserOpen}
-      onOk={handleEditUserClose}
+      onOk={form.submit}
       onCancel={handleEditUserClose}
     >
       <Form
+        form={form}
         name="basic"
         layout="vertical"
-        onFinish={onFinish}
+        onFinish={handleUpdateUser}
         className="w-full"
       >
         <Form.Item
           label="ID"
-          name="Id"
+          name="id"
           rules={[{ required: true, message: "ID is required" }]}
         >
           <Input disabled />
@@ -62,7 +81,7 @@ export default function EditUserComponent({
 
         <Form.Item
           label="Password"
-          name="password"
+          name="passWord"
           rules={[
             {
               required: true,

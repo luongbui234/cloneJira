@@ -10,13 +10,13 @@ export default function CheckUser({ children }: { children: ReactNode }) {
     return state.me;
   });
 
-  const urlPages: string[] = ["/projects", "users", "profile"];
-
   const pathName = usePathname();
 
   const router = useRouter();
 
   useEffect(() => {
+    const urlPages: string[] = ["/projects", "users", "profile"];
+
     if (!me) {
       urlPages.map((url) => {
         if (pathName.includes(url)) {
@@ -24,7 +24,7 @@ export default function CheckUser({ children }: { children: ReactNode }) {
         }
       });
     }
-  }, [me]);
+  }, [me, pathName, router]);
 
   return <>{children}</>;
 }

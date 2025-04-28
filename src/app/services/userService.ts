@@ -1,23 +1,7 @@
-import { Signin, Signup, UpdateUser } from "../types/user";
+import { User } from "../types/user";
 import { https } from "./config";
 
-export const signinService = async (data: Signin) => {
-  return https(
-    "https://jiranew.cybersoft.edu.vn/api/Users/signin",
-    "POST",
-    data
-  );
-};
-
-export const signupService = async (data: Signup) => {
-  return https(
-    "https://jiranew.cybersoft.edu.vn/api/Users/signup",
-    "POST",
-    data
-  );
-};
-
-export const getUserService = async (keyword: string | undefined) => {
+export const getUserService = async (keyword: string | number | undefined) => {
   return https(
     `https://jiranew.cybersoft.edu.vn/api/Users/getUser?keyword=${
       keyword || ""
@@ -27,10 +11,18 @@ export const getUserService = async (keyword: string | undefined) => {
   );
 };
 
-export const updateUserService = (data: UpdateUser) => {
+export const updateUserService = (data: User) => {
   return https(
     "https://jiranew.cybersoft.edu.vn/api/Users/editUser",
     "PUT",
     data
+  );
+};
+
+export const deleteUserService = (id: number) => {
+  return https(
+    `https://jiranew.cybersoft.edu.vn/api/Users/deleteUser?id=${id}`,
+    "DELETE",
+    null
   );
 };

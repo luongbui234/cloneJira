@@ -1,7 +1,7 @@
 "use client";
 
-import { signupService } from "@/app/services/userService";
-import { Signup } from "@/app/types/user";
+import { signupService } from "@/app/services/meService";
+import { Signup } from "@/app/types/me";
 import {
   LockOutlined,
   MailOutlined,

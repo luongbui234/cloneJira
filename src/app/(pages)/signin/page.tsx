@@ -1,8 +1,8 @@
 "use client";
 
 import SigninFormComponent from "@/app/Components/SigninForm";
-import { signinService } from "@/app/services/userService";
-import { Signin } from "@/app/types/user";
+import { signinService } from "@/app/services/meService";
+import { Signin } from "@/app/types/me";
 import { setMe } from "@/redux/meSlice";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -14,7 +14,7 @@ export default function SigninPage() {
 
   const router = useRouter();
 
-  const onFinish = async (data: Signin) => {
+  const handleSignin = async (data: Signin) => {
     const action = await signinService(data);
     if (action.statusCode === 200) {
       dispatch(setMe(action.content));
@@ -33,7 +33,7 @@ export default function SigninPage() {
         <img src="/signin.png" alt="" />
       </div>
       <div className="w-full desktop:w-1/2 flex flex-col justify-center items-center">
-        <SigninFormComponent onFinish={onFinish} />
+        <SigninFormComponent onFinish={handleSignin} />
       </div>
     </div>
   );

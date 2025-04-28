@@ -1,7 +1,12 @@
 import { getLocalStorage } from "@/app/services/config";
+import { Me } from "@/app/types/me";
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+interface Props {
+  me: Me;
+}
+
+const initialState: Props = {
   me: getLocalStorage(),
 };
 

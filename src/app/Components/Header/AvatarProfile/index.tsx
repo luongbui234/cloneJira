@@ -1,4 +1,4 @@
-import { Me } from "@/app/types/user";
+import { Me } from "@/app/types/me";
 import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar, Dropdown, MenuProps } from "antd";
 import Link from "next/link";

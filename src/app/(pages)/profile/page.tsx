@@ -1,8 +1,8 @@
 "use client";
 
-import { updateUserService } from "@/app/services/userService";
+import { updateProfileService } from "@/app/services/meService";
 import { RootState } from "@/app/store/store";
-import { UpdateUser } from "@/app/types/user";
+import { Profile } from "@/app/types/me";
 import { Avatar, Button, Form, Input } from "antd";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -16,13 +16,13 @@ export default function ProfilePage() {
 
   const router = useRouter();
 
-  const handleUpdateUser = async (data: UpdateUser) => {
-    const action = await updateUserService(data);
+  const handleUpdateUser = async (data: Profile) => {
+    const action = await updateProfileService(data);
     if (action.statusCode === 200) {
       router.push("/signin");
       window.location.href = "/signin";
       localStorage.removeItem("ME");
-      toast.success("Update successfully");
+      toast.success("Update profile successfully");
     } else {
       toast.error(action.message);
     }

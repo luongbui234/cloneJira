@@ -1,3 +1,5 @@
+"use client";
+
 import {
   DeleteOutlined,
   EditOutlined,
@@ -6,44 +8,57 @@ import {
 import { Button, Descriptions, message, Popconfirm, Table } from "antd";
 import React from "react";
 import EditUserComponent from "./EditUser";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/store/store";
+import { User } from "@/app/types/user";
 
 interface Props {
   isEditUserOpen: boolean;
-  handleEditUserOpen: () => void;
+  handleEditUserOpen: (id: number) => void;
   handleEditUserClose: () => void;
+  handleUpdateUser: (data: User) => void;
+  handleDeleteUser: (id: number) => void;
 }
 
 export default function UsersTableComponent({
   isEditUserOpen,
   handleEditUserOpen,
   handleEditUserClose,
+  handleUpdateUser,
+  handleDeleteUser,
 }: Props) {
-  const confirm = () => {
-    message.success("Click on Yes");
-  };
+  const { listUser } = useSelector((state: RootState) => {
+    return state.user;
+  });
+
   const cancel = () => {
     message.error("Click on No");
   };
 
-  const dataSource = [
-    {
-      no: 1,
-      name: "luong",
-      userId: "1111",
-      email: "luong@gmail.com",
-      phoneNumber: "0123456789",
+  const dataSource = listUser.map((user, index) => {
+    return {
+      key: user.userId,
+      no: index + 1,
+      name: user.name,
+      userId: user.userId,
+      email: user.email,
+      phoneNumber: user.phoneNumber,
       action: (
         <div className="space-x-2">
-          <Button type="primary" onClick={handleEditUserOpen}>
+          <Button
+            type="primary"
+            onClick={() => handleEditUserOpen(user.userId)}
+          >
             <EditOutlined />
           </Button>
           <Popconfirm
             icon={<QuestionCircleOutlined style={{ color: "red" }} />}
-            title="Are you sure to delete this user?"
-            onConfirm={confirm}
+            title={`Are you sure to delete user: ${user.name}?`}
+            onConfirm={() => handleDeleteUser(user.userId)}
             onCancel={cancel}
             okText="Yes"
             cancelText="No"
+            okType="danger"
           >
             <Button danger>
               <DeleteOutlined />
@@ -51,11 +66,11 @@ export default function UsersTableComponent({
           </Popconfirm>
         </div>
       ),
-    },
-  ];
-
-  const dataSourceMobile = [
-    {
+    };
+  });
+  const dataSourceMobile = listUser.map((user, index) => {
+    return {
+      key: user.userId,
       dataMobile: (
         <Descriptions
           bordered
@@ -63,34 +78,37 @@ export default function UsersTableComponent({
             {
               key: 1,
               label: <strong>No.</strong>,
-              children: 1,
+              children: index + 1,
             },
             {
               key: 2,
               label: <strong>Name</strong>,
-              children: "luong",
+              children: user.name,
             },
             {
               key: 3,
               label: <strong>User ID</strong>,
-              children: 1111,
+              children: user.userId,
             },
             {
               key: 4,
               label: <strong>Email</strong>,
-              children: "luong@gmail.com",
+              children: user.email,
             },
             {
               key: 5,
               label: <strong>Phone Number</strong>,
-              children: "0123456789",
+              children: user.phoneNumber,
             },
             {
               key: 6,
               label: <strong>Actions</strong>,
               children: (
                 <div className="space-x-2">
-                  <Button type="primary" onClick={handleEditUserOpen}>
+                  <Button
+                    type="primary"
+                    onClick={() => handleEditUserOpen(user.userId)}
+                  >
                     <EditOutlined />
                   </Button>
                   <Popconfirm
@@ -101,10 +119,11 @@ export default function UsersTableComponent({
                       />
                     }
                     title="Are you sure to delete this user?"
-                    onConfirm={confirm}
+                    onConfirm={() => handleDeleteUser(user.userId)}
                     onCancel={cancel}
                     okText="Yes"
                     cancelText="No"
+                    okType="danger"
                   >
                     <Button danger>
                       <DeleteOutlined />
@@ -116,8 +135,8 @@ export default function UsersTableComponent({
           ]}
         />
       ),
-    },
-  ];
+    };
+  });
 
   const columns = [
     {
@@ -169,6 +188,7 @@ export default function UsersTableComponent({
       <EditUserComponent
         isEditUserOpen={isEditUserOpen}
         handleEditUserClose={handleEditUserClose}
+        handleUpdateUser={handleUpdateUser}
       />
     </>
   );
