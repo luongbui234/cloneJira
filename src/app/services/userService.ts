@@ -2,7 +2,7 @@ import { User } from "../types/user";
 import { https } from "./config";
 
 export const getUserService = async (keyword: string | number | undefined) => {
-  return https(
+  return await https(
     `https://jiranew.cybersoft.edu.vn/api/Users/getUser?keyword=${
       keyword || ""
     }`,
@@ -11,16 +11,16 @@ export const getUserService = async (keyword: string | number | undefined) => {
   );
 };
 
-export const updateUserService = (data: User) => {
-  return https(
+export const updateUserService = async (data: User) => {
+  return await https(
     "https://jiranew.cybersoft.edu.vn/api/Users/editUser",
     "PUT",
     data
   );
 };
 
-export const deleteUserService = (id: number) => {
-  return https(
+export const deleteUserService = async (id: number) => {
+  return await https(
     `https://jiranew.cybersoft.edu.vn/api/Users/deleteUser?id=${id}`,
     "DELETE",
     null
