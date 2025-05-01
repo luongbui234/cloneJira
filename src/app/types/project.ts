@@ -12,5 +12,45 @@ export interface CreateProject {
   projectName: string;
   description: string;
   categoryId: number;
+}
+
+export interface Creator {
+  id: number;
+  name: string;
+}
+
+export interface Member {
+  userId: number;
+  name: string;
+  avatar: string;
+}
+
+export interface Project {
+  id: number;
+  projectName: string;
+  categoryName: string;
+  creator: Creator;
+  description: string;
+  categoryId: number;
+  members: Member[];
+}
+
+export interface ListTask {
+  lstTaskDeTail: [];
+  statusId: number;
+  statusName: string;
   alias: string;
+}
+
+export interface EditProject {
+  id: number;
+  projectName: string;
+  creator: Creator;
+  description: string;
+  projectCategory: {
+    id: number;
+    name: string;
+  };
+  lstTask: ListTask;
+  members: [];
 }

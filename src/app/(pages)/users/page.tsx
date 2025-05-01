@@ -60,12 +60,12 @@ export default function UsersPage() {
 
   useEffect(() => {
     (async () => {
-      getUserKeyword(undefined);
+      await getUserKeyword(undefined);
     })();
   }, []);
 
-  const renderListUser = _.debounce(async (keyword: string) => {
-    getUserKeyword(keyword);
+  const renderListUser = _.debounce(async (keyword: string | number) => {
+    await getUserKeyword(keyword);
   }, 500);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {

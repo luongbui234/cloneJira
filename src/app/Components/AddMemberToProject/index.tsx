@@ -1,6 +1,5 @@
 import { Avatar, Button, List, Modal } from "antd";
 import React from "react";
-import ProjectsSearchComponent from "../ProjectsSearch";
 
 interface Props {
   isAddMemberOpen: boolean;
@@ -93,7 +92,7 @@ export default function AddMemberToProjectComponent({
     >
       <div className="flex justify-between items-center w-full ipad:w-1/2">
         <p>Search user:</p>
-        <ProjectsSearchComponent />
+        {/* <ProjectsSearchComponent /> */}
       </div>
       <div className="flex justify-between flex-wrap ipad:flex-nowrap gap-5">
         <div className="w-full space-y-2">

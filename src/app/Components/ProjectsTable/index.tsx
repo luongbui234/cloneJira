@@ -1,42 +1,39 @@
 "use client";
 
+import { RootState } from "@/app/store/store";
 import {
-  AntDesignOutlined,
   DeleteOutlined,
   EditOutlined,
   QuestionCircleOutlined,
-  UserOutlined,
 } from "@ant-design/icons";
-import {
-  Avatar,
-  Button,
-  Descriptions,
-  message,
-  Popconfirm,
-  Table,
-  Tooltip,
-} from "antd";
+import { Avatar, Button, Descriptions, Popconfirm, Table, Tooltip } from "antd";
 import Link from "next/link";
 import React from "react";
+import { useSelector } from "react-redux";
 
-export default function ProjectsTableComponent() {
-  const confirm = () => {
-    message.success("Click on Yes");
-  };
-  const cancel = () => {
-    message.error("Click on No");
-  };
+interface Props {
+  handleDeleteProject: (id: number) => void;
+}
 
-  const dataSource = [
-    {
-      id: 1,
+export default function ProjectsTableComponent({ handleDeleteProject }: Props) {
+  const { listProject } = useSelector((state: RootState) => {
+    return state.project;
+  });
+
+  const dataSource = listProject.map((project) => {
+    return {
+      key: project.id,
+      id: project.id,
       projectName: (
-        <Link href={"/projects/boardProject/15907"} className="text-blue-500">
-          luong
+        <Link
+          href={`/projects/boardProject/${project.id}`}
+          className="text-blue-500"
+        >
+          {project.projectName}
         </Link>
       ),
-      categoryName: "du an phan mem",
-      creator: "bui van luong",
+      categoryName: project.categoryName,
+      creator: project.creator.name,
       members: (
         <Avatar.Group
           max={{
@@ -44,37 +41,27 @@ export default function ProjectsTableComponent() {
             style: { color: "#f56a00", backgroundColor: "#fde3cf" },
           }}
         >
-          <Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=2" />
-          <Avatar style={{ backgroundColor: "#f56a00" }}>K</Avatar>
-          <Tooltip title="Ant User" placement="top">
-            <Avatar
-              style={{ backgroundColor: "#87d068" }}
-              icon={<UserOutlined />}
-            />
-          </Tooltip>
-          <Avatar
-            style={{ backgroundColor: "#1677ff" }}
-            icon={<AntDesignOutlined />}
-          />
+          {project.members.map((member, index) => {
+            return (
+              <Tooltip key={index} title={member.name} placement="top">
+                <Avatar src={member.avatar} />
+              </Tooltip>
+            );
+          })}
         </Avatar.Group>
       ),
       actions: (
         <div className="space-x-2">
-          <Button type="primary" href="/projects/updateProject/15907">
+          <Button type="primary" href={`/projects/updateProject/${project.id}`}>
             <EditOutlined />
           </Button>
           <Popconfirm
-            icon={
-              <QuestionCircleOutlined
-                style={{ color: "red" }}
-                className="text-red-500"
-              />
-            }
-            title="Are you sure to delete project: du an cyber?"
-            onConfirm={confirm}
-            onCancel={cancel}
+            icon={<QuestionCircleOutlined style={{ color: "red" }} />}
+            title={`Are you sure to delete project: ${project.projectName}?`}
+            onConfirm={() => handleDeleteProject(project.id)}
             okText="Yes"
             cancelText="No"
+            okType="danger"
           >
             <Button danger>
               <DeleteOutlined />
@@ -82,11 +69,12 @@ export default function ProjectsTableComponent() {
           </Popconfirm>
         </div>
       ),
-    },
-  ];
+    };
+  });
 
-  const dataSourceMobile = [
-    {
+  const dataSourceMobile = listProject.map((project) => {
+    return {
+      key: project.id,
       dataMobile: (
         <Descriptions
           bordered
@@ -94,29 +82,29 @@ export default function ProjectsTableComponent() {
             {
               key: 1,
               label: <strong>Id</strong>,
-              children: "1155",
+              children: project.id,
             },
             {
               key: 2,
               label: <strong>Project name</strong>,
               children: (
                 <Link
-                  href={"/projects/boardProject/15907"}
+                  href={`/projects/boardProject/${project.id}`}
                   className="text-blue-500"
                 >
-                  luong
+                  {project.projectName}
                 </Link>
               ),
             },
             {
               key: 3,
               label: <strong>Category name</strong>,
-              children: "du an phan mem",
+              children: project.categoryName,
             },
             {
               key: 4,
               label: <strong>Creator</strong>,
-              children: "bui van luong",
+              children: project.creator.name,
             },
             {
               key: 5,
@@ -128,18 +116,13 @@ export default function ProjectsTableComponent() {
                     style: { color: "#f56a00", backgroundColor: "#fde3cf" },
                   }}
                 >
-                  <Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=2" />
-                  <Avatar style={{ backgroundColor: "#f56a00" }}>K</Avatar>
-                  <Tooltip title="Ant User" placement="top">
-                    <Avatar
-                      style={{ backgroundColor: "#87d068" }}
-                      icon={<UserOutlined />}
-                    />
-                  </Tooltip>
-                  <Avatar
-                    style={{ backgroundColor: "#1677ff" }}
-                    icon={<AntDesignOutlined />}
-                  />
+                  {project.members.map((member, index) => {
+                    return (
+                      <Tooltip key={index} title={member.name} placement="top">
+                        <Avatar src={member.avatar} />
+                      </Tooltip>
+                    );
+                  })}
                 </Avatar.Group>
               ),
             },
@@ -148,21 +131,19 @@ export default function ProjectsTableComponent() {
               label: <strong>Actions</strong>,
               children: (
                 <div className="space-x-2">
-                  <Button type="primary" href="/projects/updateProject/15907">
+                  <Button
+                    type="primary"
+                    href={`/projects/updateProject/${project.id}`}
+                  >
                     <EditOutlined />
                   </Button>
                   <Popconfirm
-                    icon={
-                      <QuestionCircleOutlined
-                        style={{ color: "red" }}
-                        className="text-red-500"
-                      />
-                    }
-                    title="Are you sure to delete project: du an cyber?"
-                    onConfirm={confirm}
-                    onCancel={cancel}
+                    icon={<QuestionCircleOutlined style={{ color: "red" }} />}
+                    title={`Are you sure to delete project: ${project.projectName}?`}
+                    onConfirm={() => handleDeleteProject(project.id)}
                     okText="Yes"
                     cancelText="No"
+                    okType="danger"
                   >
                     <Button danger>
                       <DeleteOutlined />
@@ -174,8 +155,8 @@ export default function ProjectsTableComponent() {
           ]}
         />
       ),
-    },
-  ];
+    };
+  });
 
   const columns = [
     {

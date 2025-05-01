@@ -5,7 +5,7 @@ import {
   EditOutlined,
   QuestionCircleOutlined,
 } from "@ant-design/icons";
-import { Button, Descriptions, message, Popconfirm, Table } from "antd";
+import { Button, Descriptions, Popconfirm, Table } from "antd";
 import React from "react";
 import EditUserComponent from "./EditUser";
 import { useSelector } from "react-redux";
@@ -31,10 +31,6 @@ export default function UsersTableComponent({
     return state.user;
   });
 
-  const cancel = () => {
-    message.error("Click on No");
-  };
-
   const dataSource = listUser.map((user, index) => {
     return {
       key: user.userId,
@@ -55,7 +51,6 @@ export default function UsersTableComponent({
             icon={<QuestionCircleOutlined style={{ color: "red" }} />}
             title={`Are you sure to delete user: ${user.name}?`}
             onConfirm={() => handleDeleteUser(user.userId)}
-            onCancel={cancel}
             okText="Yes"
             cancelText="No"
             okType="danger"
@@ -120,7 +115,6 @@ export default function UsersTableComponent({
                     }
                     title="Are you sure to delete this user?"
                     onConfirm={() => handleDeleteUser(user.userId)}
-                    onCancel={cancel}
                     okText="Yes"
                     cancelText="No"
                     okType="danger"
