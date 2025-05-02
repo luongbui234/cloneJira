@@ -1,13 +1,15 @@
 "use client";
 
-import {
-  AntDesignOutlined,
-  PlusOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 import { Avatar, Button, Tooltip } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import AddMemberToProjectComponent from "../AddMemberToProject";
+import { useParams } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/app/store/store";
+import { getProjectDetailService } from "@/app/services/projectService";
+import { setDetailProject, setListUserNotYetAdded } from "@/redux/projectSlice";
+import { getUserService } from "@/app/services/userService";
 
 interface Props {
   isAddMemberOpen: boolean;
@@ -20,6 +22,25 @@ export default function MembersTaskComponent({
   handleAddMemberOpen,
   handleAddMemberClose,
 }: Props) {
+  const dispatch = useDispatch();
+
+  const params = useParams();
+
+  const { id } = params;
+
+  const { membersProject } = useSelector((state: RootState) => {
+    return state.project;
+  });
+
+  useEffect(() => {
+    (async () => {
+      const actionDetail = await getProjectDetailService(id);
+      dispatch(setDetailProject(actionDetail.content));
+      const actionUsers = await getUserService(undefined);
+      dispatch(setListUserNotYetAdded(actionUsers.content));
+    })();
+  }, []);
+
   return (
     <div>
       <p>Members: </p>
@@ -30,24 +51,20 @@ export default function MembersTaskComponent({
             style: { color: "#f56a00", backgroundColor: "#fde3cf" },
           }}
         >
-          <Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=2" />
-          <Avatar style={{ backgroundColor: "#f56a00" }}>K</Avatar>
-          <Tooltip title="Ant User" placement="top">
-            <Avatar
-              style={{ backgroundColor: "#87d068" }}
-              icon={<UserOutlined />}
-            />
-          </Tooltip>
-          <Avatar
-            style={{ backgroundColor: "#1677ff" }}
-            icon={<AntDesignOutlined />}
-          />
+          {membersProject.map((member, index) => {
+            return (
+              <Tooltip key={index} title={member.name} placement="top">
+                <Avatar src={member.avatar} />
+              </Tooltip>
+            );
+          })}
         </Avatar.Group>
         <Button shape="circle" onClick={handleAddMemberOpen}>
           <PlusOutlined />
         </Button>
       </div>
       <AddMemberToProjectComponent
+        id={id}
         isAddMemberOpen={isAddMemberOpen}
         handleAddMemberClose={handleAddMemberClose}
       />

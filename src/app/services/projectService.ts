@@ -1,4 +1,4 @@
-import { CreateProject, EditProject } from "../types/project";
+import { CreateProject, EditProject, UserProject } from "../types/project";
 import { https } from "./config";
 
 export const getCategoryService = async () => {
@@ -49,6 +49,22 @@ export const updateProjectService = async (data: EditProject) => {
   return await https(
     `https://jiranew.cybersoft.edu.vn/api/Project/updateProject?projectId=${data.id}`,
     "PUT",
+    data
+  );
+};
+
+export const assignUserProject = async (data: UserProject) => {
+  return await https(
+    "https://jiranew.cybersoft.edu.vn/api/Project/assignUserProject",
+    "POST",
+    data
+  );
+};
+
+export const removeUserProject = async (data: UserProject) => {
+  return await https(
+    "https://jiranew.cybersoft.edu.vn/api/Project/removeUserFromProject",
+    "POST",
     data
   );
 };

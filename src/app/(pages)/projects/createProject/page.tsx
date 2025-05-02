@@ -1,32 +1,31 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Button, Form, Input, Select } from "antd";
-import { Category, CategoryApi, CreateProject } from "@/app/types/project";
+import { CreateProject } from "@/app/types/project";
 import {
   createProjectService,
   getCategoryService,
 } from "@/app/services/projectService";
 import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { setCategoryProject } from "@/redux/projectSlice";
+import { RootState } from "@/app/store/store";
 const { TextArea } = Input;
 
 export default function CreateProjectPage() {
   const [form] = Form.useForm();
 
-  const [listCategory, setListCategory] = useState<Category[]>([]);
+  const dispatch = useDispatch();
+
+  const { categoryProject } = useSelector((state: RootState) => {
+    return state.project;
+  });
 
   useEffect(() => {
     (async () => {
       const action = await getCategoryService();
-      const categoryApi: CategoryApi[] = action.content;
-      const category = categoryApi.map((item, index) => {
-        return {
-          key: index + 1,
-          label: item.projectCategoryName,
-          value: item.id,
-        };
-      });
-      setListCategory(category);
+      dispatch(setCategoryProject(action.content));
     })();
   }, []);
 
@@ -66,7 +65,7 @@ export default function CreateProjectPage() {
         >
           <Select
             placeholder={"Select a project category"}
-            options={listCategory}
+            options={categoryProject}
           />
         </Form.Item>
 

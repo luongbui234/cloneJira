@@ -42,7 +42,7 @@ export interface ListTask {
   alias: string;
 }
 
-export interface EditProject {
+export interface DetailProject {
   id: number;
   projectName: string;
   creator: Creator;
@@ -52,5 +52,27 @@ export interface EditProject {
     name: string;
   };
   lstTask: ListTask;
-  members: [];
+  members: Member[];
+}
+
+export interface EditProject {
+  id: number;
+  projectName: string;
+  creator: Creator;
+  description: string;
+  categoryId: {
+    id: number;
+    name: string;
+  };
+}
+
+export interface UserNotYetAdded {
+  userId: number;
+  name: string;
+  avatar: string;
+}
+
+export interface UserProject {
+  projectId: number | string | string[] | undefined;
+  userId: number;
 }

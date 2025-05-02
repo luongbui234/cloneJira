@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  getCategoryService,
   getProjectDetailService,
   updateProjectService,
 } from "@/app/services/projectService";
@@ -12,7 +13,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 const { TextArea } = Input;
 import { useParams } from "next/navigation";
-import { setEditProject } from "@/redux/projectSlice";
+import { setCategoryProject, setDetailProject } from "@/redux/projectSlice";
 import toast from "react-hot-toast";
 
 export default function UpdateProjectPage() {
@@ -24,7 +25,7 @@ export default function UpdateProjectPage() {
 
   const { id } = params;
 
-  const { editProject } = useSelector((state: RootState) => {
+  const { categoryProject, editProject } = useSelector((state: RootState) => {
     return state.project;
   });
 
@@ -39,8 +40,10 @@ export default function UpdateProjectPage() {
 
   useEffect(() => {
     (async () => {
-      const action = await getProjectDetailService(id);
-      dispatch(setEditProject(action.content));
+      const actionDetail = await getProjectDetailService(id);
+      dispatch(setDetailProject(actionDetail.content));
+      const actionCategory = await getCategoryService();
+      dispatch(setCategoryProject(actionCategory.content));
     })();
   }, []);
 
@@ -48,7 +51,7 @@ export default function UpdateProjectPage() {
     form.setFieldsValue({
       id: editProject.id,
       projectName: editProject.projectName,
-      categoryId: editProject.projectCategory.id,
+      categoryId: editProject.categoryId.id,
       description: editProject.description,
       creator: editProject.creator.id,
     });
@@ -87,20 +90,7 @@ export default function UpdateProjectPage() {
         >
           <Select
             placeholder={"Select a project category"}
-            options={[
-              {
-                label: "Dự án web",
-                value: 1,
-              },
-              {
-                label: "Dự án phần mềm",
-                value: 2,
-              },
-              {
-                label: "Dự án di động",
-                value: 3,
-              },
-            ]}
+            options={categoryProject}
           />
         </Form.Item>
 
