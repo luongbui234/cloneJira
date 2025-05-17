@@ -35,7 +35,11 @@ export default function AvatarProfileComponent({ me, handleSignout }: Props) {
   ];
 
   return (
-    <Dropdown menu={{ items, selectable: true }} placement="bottomRight">
+    <Dropdown
+      menu={{ items, selectable: true }}
+      placement="bottomRight"
+      className="cursor-pointer"
+    >
       <Avatar src={me.avatar} />
     </Dropdown>
   );

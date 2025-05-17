@@ -32,7 +32,7 @@ const initialState: Props = {
       id: 0,
       name: "",
     },
-    lstTask: { lstTaskDeTail: [], statusId: 0, statusName: "", alias: "" },
+    lstTask: [],
     members: [],
   },
   editProject: {

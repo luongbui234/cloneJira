@@ -12,7 +12,6 @@ import { Button, Form, Input } from "antd";
 import Link from "next/link";
 import React from "react";
 import toast from "react-hot-toast";
-import { FaFacebook } from "react-icons/fa6";
 
 export default function SignupPage() {
   const [form] = Form.useForm();
@@ -86,9 +85,6 @@ export default function SignupPage() {
           </Link>
         </p>
       </Form>
-      <button className="m-2">
-        <FaFacebook className="text-3xl text-blue-500" />
-      </button>
     </div>
   );
 }

@@ -1,3 +1,5 @@
+import { LstTask } from "./task";
+
 export interface CategoryApi {
   id: number;
   projectCategoryName: string;
@@ -35,10 +37,10 @@ export interface Project {
   members: Member[];
 }
 
-export interface ListTask {
-  lstTaskDeTail: [];
-  statusId: number;
-  statusName: string;
+export interface Assigness {
+  id: number;
+  avatar: string;
+  name: string;
   alias: string;
 }
 
@@ -51,7 +53,7 @@ export interface DetailProject {
     id: number;
     name: string;
   };
-  lstTask: ListTask;
+  lstTask: LstTask[];
   members: Member[];
 }
 

@@ -3,7 +3,6 @@ import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import { Button, Form, Input } from "antd";
 import Link from "next/link";
 import React from "react";
-import { FaFacebook } from "react-icons/fa6";
 
 interface Props {
   onFinish: (data: Signin) => void;
@@ -49,9 +48,6 @@ export default function SigninFormComponent({ onFinish }: Props) {
           </Link>
         </p>
       </Form>
-      <button className="m-2">
-        <FaFacebook className="text-3xl text-blue-500" />
-      </button>
     </>
   );
 }

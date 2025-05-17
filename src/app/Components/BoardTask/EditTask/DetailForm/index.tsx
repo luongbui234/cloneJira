@@ -1,3 +1,4 @@
+import { RootState } from "@/app/store/store";
 import {
   CheckOutlined,
   CloseOutlined,
@@ -6,30 +7,65 @@ import {
   PauseOutlined,
   UpOutlined,
 } from "@ant-design/icons";
-import {
-  Avatar,
-  Button,
-  Collapse,
-  Input,
-  InputNumber,
-  Select,
-  Slider,
-  Tag,
-} from "antd";
+import { Avatar, Button, Collapse, Input, Select, Slider, Tag } from "antd";
 import React from "react";
+import { useSelector } from "react-redux";
 
 interface Props {
+  handleAssignUserTask: (userId: number) => void;
+  handleRemoveUserTask: (userId: number) => void;
+  handleUpdatePriority: (priorityId: number) => void;
   isEstimateOpen: boolean;
   handleEstimateOpen: () => void;
   handleEstimateClose: () => void;
+  valueEstimate: number | string;
+  handleChangeEstimate: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleUpdateEstimate: () => void;
+  valueTimeSpent: number | string;
+  handleChangeTimeSpent: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleUpdateTimeSpent: () => void;
 }
 
 export default function DetailFormComponent({
+  handleAssignUserTask,
+  handleRemoveUserTask,
+  handleUpdatePriority,
   isEstimateOpen,
   handleEstimateOpen,
   handleEstimateClose,
+  valueEstimate,
+  handleChangeEstimate,
+  handleUpdateEstimate,
+  valueTimeSpent,
+  handleChangeTimeSpent,
+  handleUpdateTimeSpent,
 }: Props) {
-  const detailForm = () => {
+  const DetailForm = () => {
+    const { detailProject } = useSelector((state: RootState) => {
+      return state.project;
+    });
+
+    const { priorityTask, detailTask } = useSelector((state: RootState) => {
+      return state.task;
+    });
+
+    const dataAssigness = detailProject.members.map((member, index) => {
+      return {
+        key: index,
+        label: (
+          <div className="flex items-center space-x-1">
+            <Avatar size={"small"} src={member.avatar} />
+            <span>{member.name}</span>
+          </div>
+        ),
+        value: member.userId,
+      };
+    });
+
+    const dataAssignessDefault = detailTask.assigness.map((member) => {
+      return member.id;
+    });
+
     return (
       <div className="space-y-3">
         <div className="space-y-1">
@@ -39,169 +75,64 @@ export default function DetailFormComponent({
             className="w-full"
             mode="multiple"
             size="large"
-            options={[
-              {
-                label: (
-                  <div className="flex items-center space-x-1">
-                    <Avatar
-                      size={"small"}
-                      style={{ backgroundColor: "#f56a00" }}
-                    >
-                      K
-                    </Avatar>
-                    <span>luong</span>
-                  </div>
-                ),
-                value: 1,
-              },
-              {
-                label: (
-                  <div className="flex items-center space-x-1">
-                    <Avatar
-                      size={"small"}
-                      style={{ backgroundColor: "#f56a00" }}
-                    >
-                      K
-                    </Avatar>
-                    <span>quynh</span>
-                  </div>
-                ),
-                value: 2,
-              },
-              {
-                label: (
-                  <div className="flex items-center space-x-1">
-                    <Avatar
-                      size={"small"}
-                      style={{ backgroundColor: "#f56a00" }}
-                    >
-                      K
-                    </Avatar>
-                    <span>dat</span>
-                  </div>
-                ),
-                value: 3,
-              },
-              {
-                label: (
-                  <div className="flex items-center space-x-1">
-                    <Avatar
-                      size={"small"}
-                      style={{ backgroundColor: "#f56a00" }}
-                    >
-                      K
-                    </Avatar>
-                    <span>luong</span>
-                  </div>
-                ),
-                value: 4,
-              },
-              {
-                label: (
-                  <div className="flex items-center space-x-1">
-                    <Avatar
-                      size={"small"}
-                      style={{ backgroundColor: "#f56a00" }}
-                    >
-                      K
-                    </Avatar>
-                    <span>luong</span>
-                  </div>
-                ),
-                value: 5,
-              },
-              {
-                label: (
-                  <div className="flex items-center space-x-1">
-                    <Avatar
-                      size={"small"}
-                      style={{ backgroundColor: "#f56a00" }}
-                    >
-                      K
-                    </Avatar>
-                    <span>luong</span>
-                  </div>
-                ),
-                value: 6,
-              },
-              {
-                label: (
-                  <div className="flex items-center space-x-1">
-                    <Avatar
-                      size={"small"}
-                      style={{ backgroundColor: "#f56a00" }}
-                    >
-                      K
-                    </Avatar>
-                    <span>luong</span>
-                  </div>
-                ),
-                value: 7,
-              },
-            ]}
+            options={dataAssigness}
+            value={dataAssignessDefault}
+            onSelect={handleAssignUserTask}
+            onDeselect={handleRemoveUserTask}
           />
         </div>
         <div className="space-y-1">
           <span className="font-bold">Priority</span>
           <Select
+            onChange={handleUpdatePriority}
             className="w-full"
-            defaultValue={1}
-            options={[
-              {
-                label: (
-                  <div className="space-x-2">
-                    <MinusOutlined className="text-green-400" />
-                    <span>Lowest</span>
-                  </div>
-                ),
-                value: 1,
-              },
-              {
-                label: (
-                  <div className="space-x-2">
+            value={detailTask.priorityId}
+            options={priorityTask.map((priority, index) => {
+              const iconPriority = [
+                { key: 0, label: <UpOutlined className="text-red-500" /> },
+                { key: 1, label: <MenuOutlined className="text-yellow-300" /> },
+                {
+                  key: 3,
+                  label: (
                     <PauseOutlined rotate={90} className="text-blue-500" />
-                    <span>Low</span>
-                  </div>
-                ),
-                value: 2,
-              },
-              {
+                  ),
+                },
+                { key: 4, label: <MinusOutlined className="text-green-400" /> },
+              ];
+              return {
+                key: index,
                 label: (
                   <div className="space-x-2">
-                    <MenuOutlined className="text-yellow-300" />
-                    <span>Medium</span>
+                    {iconPriority[index].label}
+                    <span>{priority.priority}</span>
                   </div>
                 ),
-                value: 3,
-              },
-              {
-                label: (
-                  <div className="space-x-2">
-                    <UpOutlined className="text-red-500" />
-                    <span>High</span>
-                  </div>
-                ),
-                value: 4,
-              },
-            ]}
+                value: priority.priorityId,
+              };
+            })}
           />
         </div>
         <div className="space-y-1">
           <span className="font-bold">Estimate</span>
           {isEstimateOpen ? (
             <div className="flex flex-wrap justify-end gap-1 border p-1">
-              <Input onBlur={handleEstimateClose} autoFocus={isEstimateOpen} />
+              <Input
+                type="number"
+                onChange={handleChangeEstimate}
+                autoFocus={isEstimateOpen}
+                value={valueEstimate}
+                className="w-full"
+              />
               <Button
-                onClick={handleEstimateClose}
+                onClick={handleUpdateEstimate}
                 icon={<CheckOutlined />}
                 type="primary"
               />
-
               <Button onClick={handleEstimateClose} icon={<CloseOutlined />} />
             </div>
           ) : (
             <div onClick={handleEstimateOpen} className="hover:bg-gray-300 p-1">
-              <Tag>500m</Tag>
+              <Tag>{detailTask.originalEstimate}m</Tag>
             </div>
           )}
         </div>
@@ -211,22 +142,48 @@ export default function DetailFormComponent({
             <div className="flex justify-between">
               <div>
                 <p>Time spent</p>
-                <InputNumber
-                  min={0}
-                  defaultValue={0}
+                <Input
+                  type="number"
+                  onChange={handleChangeTimeSpent}
+                  min={
+                    -detailTask.originalEstimate +
+                    detailTask.timeTrackingRemaining
+                  }
+                  max={
+                    detailTask.originalEstimate - detailTask.timeTrackingSpent
+                  }
+                  value={valueTimeSpent}
                   style={{ width: "120px" }}
                 />
               </div>
               <div>
                 <p>Time remaining</p>
-                <InputNumber
-                  min={0}
-                  defaultValue={0}
+                <Input
+                  type="number"
+                  value={
+                    detailTask.originalEstimate - detailTask.timeTrackingSpent
+                  }
                   style={{ width: "120px" }}
+                  disabled
                 />
               </div>
             </div>
-            <Slider defaultValue={30} />
+            <Slider
+              min={0}
+              value={
+                detailTask.originalEstimate - detailTask.timeTrackingRemaining
+              }
+              max={detailTask.originalEstimate}
+            />
+            <div className="flex justify-end">
+              <Button
+                type="primary"
+                onClick={handleUpdateTimeSpent}
+                disabled={valueTimeSpent == 0 ? true : false}
+              >
+                Save time
+              </Button>
+            </div>
           </div>
         </div>
       </div>
@@ -237,7 +194,7 @@ export default function DetailFormComponent({
     <Collapse
       defaultActiveKey={1}
       expandIconPosition="end"
-      items={[{ key: 1, label: "Detail", children: detailForm() }]}
+      items={[{ key: 1, label: "Detail", children: <DetailForm /> }]}
     />
   );
 }

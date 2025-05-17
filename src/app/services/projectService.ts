@@ -11,7 +11,7 @@ export const getCategoryService = async () => {
 
 export const createProjectService = async (data: CreateProject) => {
   return await https(
-    "https://jiranew.cybersoft.edu.vn/api/Project/createProject",
+    "https://jiranew.cybersoft.edu.vn/api/Project/createProjectAuthorize",
     "POST",
     data
   );
