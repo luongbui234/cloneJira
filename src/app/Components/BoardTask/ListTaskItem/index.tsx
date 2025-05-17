@@ -61,7 +61,7 @@ export default function ListTaskItemComponent({
       <span
         className={`bg-${status[index || 0]}-200 font-medium px-2 rounded-md`}
       >
-        {task?.statusId}
+        {task?.statusName}
       </span>
       <div className="space-y-2 py-3">
         <SortableContext
